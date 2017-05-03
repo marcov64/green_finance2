@@ -1,0 +1,330 @@
+	
+Label Root
+{
+	Son: Market
+	Label Market
+	{
+		Son: Demand
+		Label Demand
+		{
+			Son: ConsumerClass
+			Label ConsumerClass
+			{
+				Son: CFirm
+				Label CFirm
+				{
+					Param: msC
+					Param: cfapp
+
+				}
+
+				Param: cg
+				Param: ce
+				Param: cb
+				Param: IdConsumer
+				Param: Income
+				Param: alpha
+
+			}
+
+
+		}
+
+		Son: Supply
+		Label Supply
+		{
+			Son: Firm
+			Label Firm
+			{
+				Param: e
+				Param: b
+				Param: g
+				Param: IdFirm
+				Param: Sales
+				Param: Lost
+				Var: Clients
+				Var: ms
+
+			}
+
+			Var: numFirm
+
+		}
+
+		Var: InitMarket
+		Var: PreMarketTime
+		Var: PurchaseTime
+		Param: probPurchase
+		Var: TotClients
+		Param: sClients
+
+	}
+
+
+}
+
+
+DATA
+
+Object: Root C	1
+
+Object: Market C	1
+Var: InitMarket 0 n + n n
+Var: PreMarketTime 0 n + n n
+Var: PurchaseTime 0 n + d n
+Param: probPurchase 0 n + n n	0.2
+Var: TotClients 0 n + n n
+Param: sClients 0 n + n n	0.9
+
+Object: Demand C	1
+
+Object: ConsumerClass C	1
+Param: cg 0 n + n n	0.333
+Param: ce 0 n + n n	0.333
+Param: cb 0 n + n n	0.333
+Param: IdConsumer 0 n + n n	0
+Param: Income 0 n + n n	100
+Param: alpha 0 n + n n	1
+
+Object: CFirm C	1
+Param: msC 1 n + n n	0
+Param: cfapp 0 n + n n	0
+
+Object: Supply C	1
+Var: numFirm 0 n + n n
+
+Object: Firm C	10
+Param: e 0 n + n n	98.2823	103.456	95.7375	103.46	100.561	96.4753	100.901	101.521	104.995	98.5102
+Param: b 0 n + n n	98.1925	104.554	96.9955	100.147	103.9	100.374	99.0877	103.766	97.1152	103.066
+Param: g 0 n + n n	101.96	98.7023	101.347	95.7826	96.3533	97.5392	99.759	98.1601	98.6974	100.139
+Param: IdFirm 0 n + n n	1	2	3	4	5	6	7	8	9	10
+Param: Sales 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Param: Lost 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Var: Clients 1 n + n n	0	0	0	0	0	0	0	0	0	0
+Var: ms 1 s + n p	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1
+
+SIM_NUM 1
+SEED 1
+MAX_STEP 10000
+EQUATION fun_green_finance.cpp
+ MODELREPORT modelreport.html
+
+DESCRIPTION
+
+Object_Root
+(no description available)
+END_DESCRIPTION
+
+Object_Market
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_InitMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PreMarketTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PurchaseTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_probPurchase
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_TotClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_sClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Demand
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Object_ConsumerClass
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ce
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_IdConsumer
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Income
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_alpha
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_CFirm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_msC
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cfapp
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Supply
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_numFirm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Firm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_e
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [95,105].
+END_DESCRIPTION
+
+Parameter_b
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [95,105].
+END_DESCRIPTION
+
+Parameter_g
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [95,105].
+END_DESCRIPTION
+
+Parameter_IdFirm
+(no description available)
+_INIT_
+ All 100 instances increasing from 1 with steps 1. The value is increased every 1 instances.
+END_DESCRIPTION
+
+Parameter_Sales
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Lost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Clients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ms
+(no description available)
+_INIT_
+ All 100 instances equal to 0.1.
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+#include "fun_head.h"
+
+MODELBEGIN
+
+
+
+
+
+
+
+
+
+
+
+MODELEND
+
+
+
+
+void close_sim(void)
+{
+
+}
+
+
+
+END_EQ_FILE
