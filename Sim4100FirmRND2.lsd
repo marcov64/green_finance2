@@ -48,6 +48,7 @@ Label Root
 				Param: b_inn
 				Param: g_inn
 				Var: ChooseInnovation
+				Var: Innovate
 
 			}
 
@@ -111,7 +112,7 @@ Func: GaInE 0 n + d n
 Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
 Param: ImproveInn 0 n + n n	1
-Param: CostInn 0 n + n n	0
+Param: CostInn 0 n + n n	0.2
 
 Object: Firm C	1
 Param: e 0 s + n n	98.3679
@@ -126,6 +127,7 @@ Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
 Param: g_inn 0 n + n n	0
 Var: ChooseInnovation 0 s + n n
+Var: Innovate 0 n + n n
 
 SIM_NUM 1
 SEED 1
@@ -380,6 +382,12 @@ _INIT_
 END_DESCRIPTION
 
 Variable_ChooseInnovation
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Innovate
 (no description available)
 _INIT_
 

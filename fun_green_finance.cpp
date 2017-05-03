@@ -127,6 +127,45 @@ Total income spent
 
 RESULT(SUM("Income") )
 
+
+EQUATION("Innovate")
+/*
+
+*/
+v[0]=V("ChooseInnovation");
+
+v[1]=V("ImproveInn");
+v[2]=V("CostInn");
+v[13]=v[3]=V("e");
+v[14]=v[4]=V("b");
+v[15]=v[5]=V("g");
+
+if(v[0]==1)
+ {
+  v[13]=v[3]+v[1];
+  v[14]=v[4]-v[2];
+  v[15]=v[5]-v[2];
+ }
+ 
+if(v[0]==2)
+ {
+  v[13]=v[3]-v[2];
+  v[14]=v[4]+v[1];
+  v[15]=v[5]+v[2];
+ }
+if(v[0]==3)
+ {
+  v[13]=v[3]-v[2];
+  v[14]=v[4]-v[2];
+  v[15]=v[5]+v[1];
+ }
+
+WRITE("e",v[13]);
+WRITE("b",v[14]);
+WRITE("g",v[15]);
+
+RESULT(v[0] )
+
 EQUATION("ChooseInnovation")
 /*
 Verify which innovation performs best
