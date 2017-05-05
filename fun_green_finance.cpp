@@ -201,10 +201,11 @@ This is a function performing the computation
 */
 
 v[0]=V_CHEAT("ComputePrice",c);
-v[1]=VL("MaxPrice",1)*2;
-v[2]=VL("MinPrice",1);
+v[1]=V("MaxE");
+v[2]=V("SlopeE");
 
-v[3]=(v[1]-v[0])/(v[1]-v[2]);
+v[3]=V("CenterE");
+v[3]=v[1]/(1+exp(v[2]*(v[0]-v[3])));
 
 RESULT(v[3] )
 
