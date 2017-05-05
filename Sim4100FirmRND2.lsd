@@ -36,7 +36,7 @@ Label Root
 			Son: Firm
 			Label Firm
 			{
-				Param: e
+				Var: e
 				Param: b
 				Param: g
 				Param: IdFirm
@@ -49,6 +49,8 @@ Label Root
 				Param: g_inn
 				Var: ChooseInnovation
 				Var: Innovate
+				Param: Cost
+				Var: Price
 
 			}
 
@@ -58,6 +60,11 @@ Label Root
 			Func: GaInB
 			Param: ImproveInn
 			Param: CostInn
+			Func: ComputePrice
+			Func: ComputeE
+			Param: markup
+			Var: MaxPrice
+			Param: MinPrice
 
 		}
 
@@ -113,9 +120,14 @@ Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
 Param: ImproveInn 0 n + n n	1
 Param: CostInn 0 n + n n	0.2
+Func: ComputePrice 0 n + n n
+Func: ComputeE 0 n + n n
+Param: markup 0 n + n n	0.4
+Var: MaxPrice 1 n + n n	160
+Param: MinPrice 0 n + n n	100
 
 Object: Firm C	1
-Param: e 0 s + n n	98.3679
+Var: e 0 s + n n
 Param: b 0 s + n n	101.382
 Param: g 0 s + n n	101.822
 Param: IdFirm 0 n + n n	1
@@ -128,9 +140,11 @@ Param: b_inn 0 n + n n	0
 Param: g_inn 0 n + n n	0
 Var: ChooseInnovation 0 s + n n
 Var: Innovate 0 n + n n
+Param: Cost 0 s + n n	0
+Var: Price 0 s + n n
 
 SIM_NUM 1
-SEED 1
+SEED 2
 MAX_STEP 10000
 EQUATION fun_green_finance.cpp
  MODELREPORT modelreport.html
@@ -309,13 +323,43 @@ _INIT_
 
 END_DESCRIPTION
 
+Function_ComputePrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_MaxPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MinPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_Firm
 (no description available )
 _INIT_
 
 END_DESCRIPTION
 
-Parameter_e
+Variable_e
 (no description available)
 _INIT_
  All 100 instances set to random values drawn from a uniform in the range [98,102].
@@ -389,6 +433,21 @@ END_DESCRIPTION
 
 Variable_Innovate
 (no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Cost
+(no description available)
+
+_INIT_
+
+
+END_DESCRIPTION
+
+Variable_Price
+(no description available)
+
 _INIT_
 
 END_DESCRIPTION

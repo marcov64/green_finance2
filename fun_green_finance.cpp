@@ -136,31 +136,31 @@ v[0]=V("ChooseInnovation");
 
 v[1]=V("ImproveInn");
 v[2]=V("CostInn");
-v[13]=v[3]=V("e");
+v[13]=v[3]=V("Cost");
 v[14]=v[4]=V("b");
 v[15]=v[5]=V("g");
 
 if(v[0]==1)
  {
-  v[13]=v[3]+v[1];
+  v[13]=v[3]-v[1];
   v[14]=v[4]-v[2];
   v[15]=v[5]-v[2];
  }
  
 if(v[0]==2)
  {
-  v[13]=v[3]-v[2];
+  v[13]=v[3]+v[2];
   v[14]=v[4]+v[1];
   v[15]=v[5]+v[2];
  }
 if(v[0]==3)
  {
-  v[13]=v[3]-v[2];
+  v[13]=v[3]+v[2];
   v[14]=v[4]-v[2];
   v[15]=v[5]+v[1];
  }
 
-WRITE("e",v[13]);
+WRITE("Cost",v[13]);
 WRITE("b",v[14]);
 WRITE("g",v[15]);
 
@@ -193,6 +193,72 @@ if(v[3]==v[2])
 
 RESULT(-1 )
 
+EQUATION("ComputeE")
+/*
+Efficiency, computed as the complement of price normalized between max and min price
+
+This is a function performing the computation
+*/
+
+v[0]=V_CHEAT("ComputePrice",c);
+v[1]=VL("MaxPrice",1)*2;
+v[2]=VL("MinPrice",1);
+
+v[3]=(v[1]-v[0])/(v[1]-v[2]);
+
+RESULT(v[3] )
+
+EQUATION("ComputePrice")
+/*
+Comment
+*/
+v[0]=VS(c,"Cost");
+v[1]=VS(c,"markup");
+v[2]=v[0]*(1+v[1]);
+RESULT(v[2] )
+
+EQUATION("MaxPrice")
+/*
+Comment
+*/
+V("PurchaseTime");
+v[0]=v[1]=v[2]=0;
+CYCLE(cur, "Firm")
+ {
+  if(v[0]==0)
+   {v[0]=1;
+   v[1]=v[2]=VS(cur,"Price");
+   }
+  else
+   {
+    v[3]=VS(cur,"Price");
+    if(v[3]>v[1])
+     v[1]=v[3];
+    if(v[3]<v[2])
+     v[2]=v[3]; 
+   } 
+ }
+
+WRITE("MinPrice",v[2]);
+RESULT(v[1] )
+
+EQUATION("Price")
+/*
+Price
+*/
+
+v[0]=V("ComputePrice");
+RESULT(v[0] )
+
+EQUATION("e")
+/*
+Efficiency
+*/
+
+v[0]=V("ComputeE");
+RESULT(v[0] )
+
+
 EQUATION("GaInE")
 /*
 Assess the gain in improving E
@@ -200,14 +266,22 @@ Assess the gain in improving E
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
-v[2]=VS(c,"e");
+
+v[2]=VS(c,"Cost");
+v[5]=v[2]-v[0];
+WRITES(c,"Cost",v[5]);
+v[6]=V_CHEAT("ComputeE",c);
+WRITES(c,"e_inn",v[6]);
+
 v[3]=VS(c,"b");
 v[4]=VS(c,"g");
 
-WRITES(c,"e_inn",v[2]+v[0]);
+
 WRITES(c,"b_inn",v[3]-v[1]);
 WRITES(c,"g_inn",v[4]-v[1]);
 v[5]=V_CHEAT("TestInnovation",c);
+WRITES(c,"Cost",v[2]);
+
 RESULT(v[5] )
 
 EQUATION("GaInB")
@@ -217,32 +291,49 @@ Assess the gain in improving B
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
-v[2]=VS(c,"e");
+
+v[2]=VS(c,"Cost");
+v[5]=v[2]+v[1];
+WRITES(c,"Cost",v[5]);
+v[6]=V_CHEAT("ComputeE",c);
+WRITES(c,"e_inn",v[6]);
+
 v[3]=VS(c,"b");
 v[4]=VS(c,"g");
 
-WRITES(c,"e_inn",v[2]-v[1]);
+
 WRITES(c,"b_inn",v[3]+v[0]);
 WRITES(c,"g_inn",v[4]-v[1]);
 v[5]=V_CHEAT("TestInnovation",c);
+WRITES(c,"Cost",v[2]);
+
 RESULT(v[5] )
 
 EQUATION("GaInG")
 /*
-Assess the gain in improving E
+Assess the gain in improving G
 */
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
-v[2]=VS(c,"e");
+
+v[2]=VS(c,"Cost");
+v[5]=v[2]+v[1];
+WRITES(c,"Cost",v[5]);
+v[6]=V_CHEAT("ComputeE",c);
+WRITES(c,"e_inn",v[6]);
+
 v[3]=VS(c,"b");
 v[4]=VS(c,"g");
 
-WRITES(c,"e_inn",v[2]-v[1]);
+
 WRITES(c,"b_inn",v[3]-v[1]);
 WRITES(c,"g_inn",v[4]+v[0]);
 v[5]=V_CHEAT("TestInnovation",c);
+WRITES(c,"Cost",v[2]);
+
 RESULT(v[5] )
+
 
 /*********************************************
 ******** INITIALIZATION **********************
@@ -268,7 +359,11 @@ CYCLE(cur, "Firm")
   {
    WRITES(cur,"IdFirm",v[7]++);
    WRITELS(cur,"Clients",v[6], t-1);
-   WRITES(cur,"e",UNIFORM(v[8],v[9]));
+   WRITES(cur,"Cost",UNIFORM(v[8],v[9]));
+   v[21]=V_CHEAT("ComputePrice",cur);
+   WRITELS(cur,"Price",v[21], t);
+   v[20]=V_CHEAT("ComputeE",cur);
+   WRITELS(cur,"e",v[20], t);   
    WRITES(cur,"g",UNIFORM(v[8],v[9]));
    WRITES(cur,"b",UNIFORM(v[8],v[9]));
    
@@ -290,18 +385,6 @@ CYCLES(cur1, cur, "ConsumerClass")
 PARAMETER   
 
 RESULT(1)
-
-EQUATION("numFirm")
-/*
-Number of firms
-*/
-v[0]=0;
-CYCLE(cur, "Firm")
- {
-  v[0]++;
- }
-PARAMETER
-RESULT(v[0] )
 
 
 MODELEND
