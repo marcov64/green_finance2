@@ -19,10 +19,10 @@ Label Root
 				}
 
 				Param: cg
-				Param: ce
+				Var: ce
 				Param: cb
 				Param: IdConsumer
-				Param: Income
+				Param: NumConsumers
 				Param: alpha
 
 			}
@@ -107,11 +107,11 @@ Param: max 0 n + n n	102
 Object: Demand C	1
 
 Object: ConsumerClass C	2
-Param: cg 0 n + n n	0.4	0.4
-Param: ce 0 n + n n	0.2	0.2
-Param: cb 0 n + n n	0.4	0.4
+Param: cg 0 n + n n	0.2	0.2
+Var: ce 0 n + n n
+Param: cb 0 n + n n	0.2	0.2
 Param: IdConsumer 0 n + n n	0	0
-Param: Income 0 n + n n	100	100
+Param: NumConsumers 0 n + n n	10000	10000
 Param: alpha 0 n + n n	10	10
 
 Object: CFirm C	1	1
@@ -243,7 +243,7 @@ _INIT_
 
 END_DESCRIPTION
 
-Parameter_ce
+Variable_ce
 (no description available)
 _INIT_
 
@@ -261,7 +261,7 @@ _INIT_
 
 END_DESCRIPTION
 
-Parameter_Income
+Parameter_NumConsumers
 (no description available)
 _INIT_
 

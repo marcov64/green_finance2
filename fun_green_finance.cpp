@@ -36,7 +36,7 @@ CYCLE(cur, "ConsumerClass")
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
    }
-  v[14]=VS(cur,"Income");
+  v[14]=VS(cur,"NumConsumers");
 
   CYCLES(cur, cur1, "CFirm")
    {
@@ -48,7 +48,10 @@ CYCLE(cur, "ConsumerClass")
      } 
    }  
   }
-RESULT(v[4] )
+v[20]=V_CHEAT("ComputePrice", c);
+v[21]=VS(c,"Cost");
+v[22]=v[4]*(v[20]-v[21]);  
+RESULT(v[22] )
 
 
 EQUATION("PurchaseTime")
@@ -76,7 +79,7 @@ CYCLE(cur, "ConsumerClass")
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
    }
-  v[14]=VS(cur,"Income");
+  v[14]=VS(cur,"NumConsumers");
 
   CYCLES(cur, cur1, "CFirm")
    {
@@ -125,7 +128,7 @@ EQUATION("TotClients")
 Total income spent
 */
 
-RESULT(SUM("Income") )
+RESULT(SUM("NumConsumers") )
 
 
 EQUATION("Innovate")
@@ -337,6 +340,13 @@ RESULT(v[5] )
 
 
 /*********************************************
+******** ACCOUNTING **********************
+**********************************************/
+
+
+
+
+/*********************************************
 ******** INITIALIZATION **********************
 **********************************************/
 
@@ -388,6 +398,16 @@ CYCLES(cur1, cur, "ConsumerClass")
 PARAMETER   
 
 RESULT(1)
+
+EQUATION("ce")
+/*
+elasticity to efficiency. It is computed to ensure the three elasticities sum up to 1
+*/
+v[0]=V("cb");
+v[1]=V("cg");
+v[2]=1-v[0]-v[1];
+PARAMETER
+RESULT(v[2] )
 
 
 MODELEND
