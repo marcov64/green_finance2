@@ -151,7 +151,7 @@ if(v[0]==2)
  {
   v[13]=v[3]+v[2];
   v[14]=v[4]+v[1];
-  v[15]=v[5]+v[2];
+  v[15]=v[5]-v[2];
  }
 if(v[0]==3)
  {
@@ -356,11 +356,13 @@ ADDNOBJS(cur,"Firm",v[5]-1);
 v[7]=1;
 v[8]=V("min");
 v[9]=V("max");
+v[18]=V("minCost");
+v[19]=V("maxCost");
 CYCLE(cur, "Firm")
   {
    WRITES(cur,"IdFirm",v[7]++);
    WRITELS(cur,"Clients",v[6], t-1);
-   WRITES(cur,"Cost",UNIFORM(v[8],v[9]));
+   WRITES(cur,"Cost",UNIFORM(v[18],v[19]));
    v[21]=V_CHEAT("ComputePrice",cur);
    WRITELS(cur,"Price",v[21], t);
    v[20]=V_CHEAT("ComputeE",cur);

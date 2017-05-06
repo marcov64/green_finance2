@@ -68,6 +68,8 @@ Label Root
 			Param: MaxE
 			Param: SlopeE
 			Param: CenterE
+			Param: minCost
+			Param: maxCost
 
 		}
 
@@ -131,6 +133,8 @@ Param: MinPrice 0 n + n n	100
 Param: MaxE 0 n + n n	200
 Param: SlopeE 0 n + n n	0.1
 Param: CenterE 0 n + n n	100
+Param: minCost 0 n + n n	50
+Param: maxCost 0 n + n n	50
 
 Object: Firm C	1
 Var: e 0 s + n n
@@ -372,6 +376,18 @@ _INIT_
 END_DESCRIPTION
 
 Parameter_CenterE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_minCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_maxCost
 (no description available)
 _INIT_
 
