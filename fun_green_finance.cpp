@@ -91,6 +91,15 @@ CYCLE(cur, "ConsumerClass")
   }
 RESULT(1 )
 
+EQUATION("Action")
+/*
+Drive the update of firms. Inserted because of possible mismatch between timing of computation and recording of parameter saved in the AoR 
+*/
+
+V("Innovate");
+
+RESULT(1 )
+
 EQUATION("PreMarketTime")
 /*
 Variable preparing firms to receive information about consumers' choices. Must be computed before consumers can perform their purchases
@@ -129,6 +138,25 @@ Total income spent
 */
 
 RESULT(SUM("NumConsumers") )
+
+EQUATION("Profit")
+/*
+Comment
+*/
+v[0]=V("Clients");
+v[1]=V("Price");
+v[2]=V("Cost");
+v[3]=v[0]*(v[1]-v[2]);
+RESULT(v[3] )
+
+EQUATION("Savings")
+/*
+Cumulated cash from profits minus expenditures
+*/
+
+v[0]=V("Profit");
+v[1]=VL("Savings",1);
+RESULT(v[1]+v[0] )
 
 
 EQUATION("Innovate")
@@ -228,7 +256,7 @@ Comment
 V("PurchaseTime");
 v[0]=v[1]=v[2]=0;
 CYCLE(cur, "Firm")
- {
+ {VS(cur,"Action");
   if(v[0]==0)
    {v[0]=1;
    v[1]=v[2]=VS(cur,"Price");

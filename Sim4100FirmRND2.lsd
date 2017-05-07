@@ -36,6 +36,7 @@ Label Root
 			Son: Firm
 			Label Firm
 			{
+				Var: Action
 				Var: e
 				Param: b
 				Param: g
@@ -51,6 +52,9 @@ Label Root
 				Var: Innovate
 				Param: Cost
 				Var: Price
+				Param: markup
+				Var: Savings
+				Var: Profit
 
 			}
 
@@ -62,7 +66,6 @@ Label Root
 			Param: CostInn
 			Func: ComputePrice
 			Func: ComputeE
-			Param: markup
 			Var: MaxPrice
 			Param: MinPrice
 			Param: MaxE
@@ -127,7 +130,6 @@ Param: ImproveInn 0 n + n n	1
 Param: CostInn 0 n + n n	0.2
 Func: ComputePrice 0 n + n n
 Func: ComputeE 0 n + n n
-Param: markup 0 n + n n	0.4
 Var: MaxPrice 1 n + n n	160
 Param: MinPrice 0 n + n n	100
 Param: MaxE 0 n + n n	200
@@ -137,6 +139,7 @@ Param: minCost 0 n + n n	50
 Param: maxCost 0 n + n n	50
 
 Object: Firm C	1
+Var: Action 0 n + n n
 Var: e 0 s + n n
 Param: b 0 s + n n	101.382
 Param: g 0 s + n n	101.822
@@ -152,6 +155,9 @@ Var: ChooseInnovation 0 s + n n
 Var: Innovate 0 n + n n
 Param: Cost 0 s + n n	0
 Var: Price 0 s + n n
+Param: markup 0 n + n n	0.4
+Var: Savings 1 n + n n	0
+Var: Profit 0 n + n n
 
 SIM_NUM 1
 SEED 2
@@ -345,12 +351,6 @@ _INIT_
 
 END_DESCRIPTION
 
-Parameter_markup
-(no description available)
-_INIT_
-
-END_DESCRIPTION
-
 Variable_MaxPrice
 (no description available)
 _INIT_
@@ -395,6 +395,12 @@ END_DESCRIPTION
 
 Object_Firm
 (no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Action
+(no description available)
 _INIT_
 
 END_DESCRIPTION
@@ -484,6 +490,24 @@ _INIT_
 END_DESCRIPTION
 
 Variable_Price
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Savings
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Profit
 (no description available)
 _INIT_
 
