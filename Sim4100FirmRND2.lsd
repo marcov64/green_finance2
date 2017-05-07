@@ -49,7 +49,7 @@ Label Root
 				Param: b_inn
 				Param: g_inn
 				Var: ChooseInnovation
-				Var: Innovate
+				Func: Innovate
 				Param: Cost
 				Var: Price
 				Param: markup
@@ -73,6 +73,9 @@ Label Root
 			Param: CenterE
 			Param: minCost
 			Param: maxCost
+			Func: GainPrice
+			Param: delta_markup
+			Func: ComputeProfits
 
 		}
 
@@ -110,9 +113,9 @@ Param: max 0 n + n n	102
 Object: Demand C	1
 
 Object: ConsumerClass C	2
-Param: cg 0 n + n n	0.2	0.2
+Param: cg 0 n + n n	0.01	0.01
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.2	0.2
+Param: cb 0 n + n n	0.01	0.01
 Param: IdConsumer 0 n + n n	0	0
 Param: NumConsumers 0 n + n n	10000	10000
 Param: alpha 0 n + n n	10	10
@@ -137,6 +140,9 @@ Param: SlopeE 0 n + n n	0.1
 Param: CenterE 0 n + n n	100
 Param: minCost 0 n + n n	50
 Param: maxCost 0 n + n n	50
+Func: GainPrice 0 n + n n
+Param: delta_markup 0 n + n n	0.01
+Func: ComputeProfits 0 n + n n
 
 Object: Firm C	1
 Var: Action 0 n + n n
@@ -152,12 +158,12 @@ Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
 Param: g_inn 0 n + n n	0
 Var: ChooseInnovation 0 s + n n
-Var: Innovate 0 n + n n
+Func: Innovate 0 n + n n
 Param: Cost 0 s + n n	0
 Var: Price 0 s + n n
-Param: markup 0 n + n n	0.4
-Var: Savings 1 n + n n	0
-Var: Profit 0 n + n n
+Param: markup 0 s + n n	0.4
+Var: Savings 1 s + n n	0
+Var: Profit 0 s + n n
 
 SIM_NUM 1
 SEED 2
@@ -393,6 +399,24 @@ _INIT_
 
 END_DESCRIPTION
 
+Function_GainPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_delta_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeProfits
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_Firm
 (no description available )
 _INIT_
@@ -477,7 +501,7 @@ _INIT_
 
 END_DESCRIPTION
 
-Variable_Innovate
+Function_Innovate
 (no description available)
 _INIT_
 

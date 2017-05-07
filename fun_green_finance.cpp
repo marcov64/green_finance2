@@ -48,9 +48,8 @@ CYCLE(cur, "ConsumerClass")
      } 
    }  
   }
-v[20]=V_CHEAT("ComputePrice", c);
-v[21]=VS(c,"Cost");
-v[22]=v[4]*(v[20]-v[21]);  
+
+v[22]=V_CHEAT("ComputeProfits", c);
 RESULT(v[22] )
 
 
@@ -91,14 +90,6 @@ CYCLE(cur, "ConsumerClass")
   }
 RESULT(1 )
 
-EQUATION("Action")
-/*
-Drive the update of firms. Inserted because of possible mismatch between timing of computation and recording of parameter saved in the AoR 
-*/
-
-V("Innovate");
-
-RESULT(1 )
 
 EQUATION("PreMarketTime")
 /*
@@ -139,15 +130,22 @@ Total income spent
 
 RESULT(SUM("NumConsumers") )
 
+EQUATION("ComputeProfits")
+/*
+Comment
+*/
+v[0]=VS(c,"Clients");
+v[1]=V_CHEAT("ComputePrice",c);
+v[2]=VS(c,"Cost");
+v[3]=v[0]*(v[1]-v[2]);
+RESULT(v[3] )
+
 EQUATION("Profit")
 /*
 Comment
 */
-v[0]=V("Clients");
-v[1]=V("Price");
-v[2]=V("Cost");
-v[3]=v[0]*(v[1]-v[2]);
-RESULT(v[3] )
+
+RESULT(V("ComputeProfits") )
 
 EQUATION("Savings")
 /*
@@ -157,6 +155,28 @@ Cumulated cash from profits minus expenditures
 v[0]=V("Profit");
 v[1]=VL("Savings",1);
 RESULT(v[1]+v[0] )
+
+EQUATION("Action")
+/*
+
+*/
+
+v[0]=V("Profit");
+v[1]=V("GainPrice");
+if(abs(v[1])>v[0])
+ {
+  v[2]=V("delta_markup");
+  v[3]=V("markup");
+  if(v[1]<0)
+   v[4]=v[3]*(1-v[2]);
+  else
+   v[4]=v[3]/(1-v[2]); 
+  WRITE("markup",v[4]); 
+ }
+//else 
+ //V("Innovate");
+
+RESULT(v[1] )
 
 
 EQUATION("Innovate")
@@ -289,6 +309,39 @@ Efficiency
 
 v[0]=V("ComputeE");
 RESULT(v[0] )
+
+EQUATION("GainPrice")
+/*
+Assess the gain in changing the markup level
+Return 0 in case there any change provides 
+*/
+
+v[3]=VS(c,"b");
+v[4]=VS(c,"g");
+WRITES(c,"b_inn",v[3]);
+WRITES(c,"g_inn",v[4]);
+
+v[0]=V("delta_markup");
+
+v[2]=VS(c,"markup");
+v[5]=v[2]*(1-v[0]);
+WRITES(c,"markup",v[5]);
+v[6]=V_CHEAT("ComputeE",c);
+WRITES(c,"e_inn",v[6]);
+v[7]=V_CHEAT("TestInnovation",c);
+
+v[5]=v[2]/(1-v[0]);
+WRITES(c,"markup",v[5]);
+v[6]=V_CHEAT("ComputeE",c);
+WRITES(c,"e_inn",v[6]);
+
+v[8]=V_CHEAT("TestInnovation",c);
+
+WRITES(c,"markup",v[2]);
+
+if(v[8]<v[7])
+ v[8]*=-1; 
+RESULT(v[8] )
 
 
 EQUATION("GaInE")
