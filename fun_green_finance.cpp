@@ -139,6 +139,7 @@ Comment
 v[0]=VS(c,"Clients");
 v[1]=V_CHEAT("ComputePrice",c);
 v[2]=VS(c,"Cost");
+//v[22]=V("FinancialCosts");
 v[3]=v[0]*(v[1]-v[2]);
 RESULT(v[3] )
 

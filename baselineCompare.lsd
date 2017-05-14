@@ -100,23 +100,23 @@ DATA
 
 Object: Root C	1
 
-Object: Market C	1
+Object: Market C	2
 Var: InitMarket 0 n + d n
 Var: PreMarketTime 0 n + d n
 Var: PurchaseTime 0 n + d n
-Param: probPurchase 0 n + n n	0.2
+Param: probPurchase 0 n + n n	0.2	0.2
 Var: TotClients 0 n + n n
-Param: sClients 0 n + n n	0
+Param: sClients 0 n + n n	0	0
 Func: TestInnovation 0 n + n n
-Param: min 0 n + n n	98
-Param: max 0 n + n n	102
+Param: min 0 n + n n	98	98
+Param: max 0 n + n n	102	102
 
-Object: Demand C	1
+Object: Demand C	1	1
 
-Object: ConsumerClass C	2
-Param: cg 0 n + n n	0.3	0.3
+Object: ConsumerClass C	1	1
+Param: cg 0 n + n n	0.4	0.1
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.3	0.3
+Param: cb 0 n + n n	0.4	0.1
 Param: IdConsumer 0 n + n n	0	0
 Param: NumConsumers 0 n + n n	10000	10000
 Param: alpha 0 n + n n	10	10
@@ -125,46 +125,46 @@ Object: CFirm C	1	1
 Param: msC 1 n + n n	0	0
 Param: cfapp 0 n + n n	0	0
 
-Object: Supply C	1
-Param: numFirm 0 n + n n	100
+Object: Supply C	1	1
+Param: numFirm 0 n + n n	100	100
 Func: GaInE 0 n + d n
 Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
-Param: ImproveInn 0 n + n n	1
-Param: CostInn 0 n + n n	0.2
+Param: ImproveInn 0 n + n n	1	1
+Param: CostInn 0 n + n n	0.2	0.2
 Func: ComputePrice 0 n + n n
 Func: ComputeE 0 n + n n
-Var: MaxPrice 1 n + n n	160
-Param: MinPrice 0 n + n n	100
-Param: MaxE 0 n + n n	200
-Param: SlopeE 0 n + n n	0.1
-Param: CenterE 0 n + n n	100
-Param: minCost 0 n + n n	50
-Param: maxCost 0 n + n n	50
+Var: MaxPrice 1 n + n n	160	160
+Param: MinPrice 0 n + n n	100	100
+Param: MaxE 0 n + n n	200	200
+Param: SlopeE 0 n + n n	0.1	0.1
+Param: CenterE 0 n + n n	100	100
+Param: minCost 0 n + n n	50	50
+Param: maxCost 0 n + n n	50	50
 Func: GainPrice 0 n + n n
-Param: delta_markup 0 n + n n	0.1
+Param: delta_markup 0 n + n n	0.01	0.01
 Func: ComputeProfits 0 n + n n
 Var: ActionMarket 0 n + n n
 
-Object: Firm C	1
+Object: Firm C	1	1
 Func: ActionFirm 0 s + d n
 Var: e 0 s + n n
-Param: b 0 s + n n	101.382
-Param: g 0 s + n n	101.822
-Param: IdFirm 0 n + n n	1
-Param: Sales 0 s + n n	0
-Param: Lost 0 n + n n	0
-Var: Clients 1 n + n n	0
-Var: ms 1 s + n n	0.01
-Param: e_inn 0 n + n n	0
-Param: b_inn 0 n + n n	0
-Param: g_inn 0 n + n n	0
+Param: b 0 s + n n	101.382	101.382
+Param: g 0 s + n n	101.822	101.822
+Param: IdFirm 0 n + n n	1	1
+Param: Sales 0 s + n n	0	0
+Param: Lost 0 n + n n	0	0
+Var: Clients 1 n + n n	0	0
+Var: ms 1 s + n n	0.01	0.01
+Param: e_inn 0 n + n n	0	0
+Param: b_inn 0 n + n n	0	0
+Param: g_inn 0 n + n n	0	0
 Func: ChooseInnovation 0 s + n n
 Func: Innovate 0 n + n n
-Param: Cost 0 s + n n	0
+Param: Cost 0 s + n n	0	0
 Var: Price 0 s + n n
-Param: markup 0 s + n n	0.4
-Var: Savings 1 s + n n	0
+Param: markup 0 s + n n	0.4	0.4
+Var: Savings 1 s + n n	0	0
 Var: Profit 0 s + n n
 
 SIM_NUM 1
