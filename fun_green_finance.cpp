@@ -48,8 +48,10 @@ CYCLE(cur, "ConsumerClass")
      } 
    }  
   }
-
+v[21]=VS(c,"Clients");
+WRITELS(c,"Clients",v[4],t);
 v[22]=V_CHEAT("ComputeProfits", c);
+WRITELS(c,"Clients",v[21],t);
 RESULT(v[22] )
 
 
@@ -156,7 +158,18 @@ v[0]=V("Profit");
 v[1]=VL("Savings",1);
 RESULT(v[1]+v[0] )
 
-EQUATION("Action")
+EQUATION("ActionMarket")
+/*
+Pick one firm and let her make her move
+*/
+cur=RNDDRAWFAIR("Firm");
+
+VS(cur,"ActionFirm");
+v[0]=VS(cur,"IdFirm");
+
+RESULT(v[0] )
+
+EQUATION("ActionFirm")
 /*
 
 */
@@ -165,6 +178,7 @@ v[0]=V("Profit");
 v[1]=V("GainPrice");
 if(abs(v[1])>v[0])
  {
+  v[5]=4;
   v[2]=V("delta_markup");
   v[3]=V("markup");
   if(v[1]<0)
@@ -173,10 +187,10 @@ if(abs(v[1])>v[0])
    v[4]=v[3]/(1-v[2]); 
   WRITE("markup",v[4]); 
  }
-//else 
- //V("Innovate");
+else 
+ v[5]=V("Innovate");
 
-RESULT(v[1] )
+RESULT(v[5] )
 
 
 EQUATION("Innovate")
@@ -275,8 +289,10 @@ Comment
 */
 V("PurchaseTime");
 v[0]=v[1]=v[2]=0;
+V("ActionMarket");
+
 CYCLE(cur, "Firm")
- {VS(cur,"Action");
+ {
   if(v[0]==0)
    {v[0]=1;
    v[1]=v[2]=VS(cur,"Price");

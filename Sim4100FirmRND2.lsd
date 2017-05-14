@@ -36,7 +36,7 @@ Label Root
 			Son: Firm
 			Label Firm
 			{
-				Var: Action
+				Func: ActionFirm
 				Var: e
 				Param: b
 				Param: g
@@ -48,7 +48,7 @@ Label Root
 				Param: e_inn
 				Param: b_inn
 				Param: g_inn
-				Var: ChooseInnovation
+				Func: ChooseInnovation
 				Func: Innovate
 				Param: Cost
 				Var: Price
@@ -76,6 +76,7 @@ Label Root
 			Func: GainPrice
 			Param: delta_markup
 			Func: ComputeProfits
+			Var: ActionMarket
 
 		}
 
@@ -105,7 +106,7 @@ Var: PreMarketTime 0 n + d n
 Var: PurchaseTime 0 n + d n
 Param: probPurchase 0 n + n n	0.2
 Var: TotClients 0 n + n n
-Param: sClients 0 n + n n	0.9
+Param: sClients 0 n + n n	0
 Func: TestInnovation 0 n + n n
 Param: min 0 n + n n	98
 Param: max 0 n + n n	102
@@ -113,9 +114,9 @@ Param: max 0 n + n n	102
 Object: Demand C	1
 
 Object: ConsumerClass C	2
-Param: cg 0 n + n n	0.01	0.01
+Param: cg 0 n + n n	0.3	0.3
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.01	0.01
+Param: cb 0 n + n n	0.3	0.3
 Param: IdConsumer 0 n + n n	0	0
 Param: NumConsumers 0 n + n n	10000	10000
 Param: alpha 0 n + n n	10	10
@@ -141,11 +142,12 @@ Param: CenterE 0 n + n n	100
 Param: minCost 0 n + n n	50
 Param: maxCost 0 n + n n	50
 Func: GainPrice 0 n + n n
-Param: delta_markup 0 n + n n	0.01
+Param: delta_markup 0 n + n n	0.1
 Func: ComputeProfits 0 n + n n
+Var: ActionMarket 0 n + n n
 
 Object: Firm C	1
-Var: Action 0 n + n n
+Func: ActionFirm 0 s + d n
 Var: e 0 s + n n
 Param: b 0 s + n n	101.382
 Param: g 0 s + n n	101.822
@@ -157,7 +159,7 @@ Var: ms 1 s + n n	0.01
 Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
 Param: g_inn 0 n + n n	0
-Var: ChooseInnovation 0 s + n n
+Func: ChooseInnovation 0 s + n n
 Func: Innovate 0 n + n n
 Param: Cost 0 s + n n	0
 Var: Price 0 s + n n
@@ -417,13 +419,19 @@ _INIT_
 
 END_DESCRIPTION
 
+Variable_ActionMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_Firm
 (no description available )
 _INIT_
 
 END_DESCRIPTION
 
-Variable_Action
+Function_ActionFirm
 (no description available)
 _INIT_
 
@@ -495,7 +503,7 @@ _INIT_
 
 END_DESCRIPTION
 
-Variable_ChooseInnovation
+Function_ChooseInnovation
 (no description available)
 _INIT_
 
