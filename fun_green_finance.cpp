@@ -106,6 +106,8 @@ CYCLE(cur, "ConsumerClass")
 RESULT(1 )
 
 
+
+
 EQUATION("PreMarketTime")
 /*
 Variable preparing firms to receive information about consumers' choices. Must be computed before consumers can perform their purchases
@@ -399,6 +401,10 @@ EQUATION("GaInE")
 Assess the gain in improving E
 */
 
+v[10]=V_CHEAT("ApplyLoanE",c);
+if(v[10]==-1)
+ END_EQUATION(0);
+ 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
 
@@ -417,12 +423,16 @@ WRITES(c,"g_inn",v[4]-v[1]);
 v[5]=V_CHEAT("TestInnovation",c);
 WRITES(c,"Cost",v[2]);
 
-RESULT(v[5] )
+RESULT(v[5]-v[10] )
 
 EQUATION("GaInB")
 /*
 Assess the gain in improving B
 */
+
+v[10]=V_CHEAT("ApplyLoanB",c);
+if(v[10]==-1)
+ END_EQUATION(0);
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
@@ -442,12 +452,16 @@ WRITES(c,"g_inn",v[4]-v[1]);
 v[5]=V_CHEAT("TestInnovation",c);
 WRITES(c,"Cost",v[2]);
 
-RESULT(v[5] )
+RESULT(v[5]-v[10] )
 
 EQUATION("GaInG")
 /*
 Assess the gain in improving G
 */
+
+v[10]=V_CHEAT("ApplyLoanG",c);
+if(v[10]==-1)
+ END_EQUATION(0);
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
@@ -467,7 +481,45 @@ WRITES(c,"g_inn",v[4]+v[0]);
 v[5]=V_CHEAT("TestInnovation",c);
 WRITES(c,"Cost",v[2]);
 
-RESULT(v[5] )
+RESULT(v[5]-v[10] )
+
+/*********************************************
+******** FINANCIAL **********************
+**********************************************/
+
+EQUATION("ComputeRataG")
+/*
+
+                                     TA / PA
+C x (1 + TA / PA)**(PA x A)   ------------------------
+                               (1 + TA / PA)(PA x A) -1
+
+
+C = Capitale (importo del finanziamento)
+TA = Tasso annuo del finanziamento espresso in decimali (0,05 per scrivere 5%)
+PA = Periodi annui, cioè il numero di rate che si pagano nell'anno (per esempio indicare 12 se il pagamento è mensile)
+A = Numero di anni previsti complessivamente per il rimborso
+
+*/
+v[0]=VS(cur,"TotalLoanG");
+v[1]=VS(cur,"LengthLoanG");
+v[2]=VS(cur,"InterestLoanG");
+v[3]=VS(cur,"PeriodsLoansG");
+
+v[4]=v[0]*pow((1+v[2]/v[3]),(v[3]*v[1])*(v[2]/v[3])/((1+v[2]/v[3])*(v[3]*v[1] - 1)));
+RESULT(v[4] )
+
+EQUATION("ApplyLoanG")
+/*
+Comment
+*/
+
+v[0]=V("ComputeRataG");
+v[1]=VS(c,"Profit");
+
+
+RESULT(-1 )
+
 
 
 /*********************************************
