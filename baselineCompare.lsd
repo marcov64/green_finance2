@@ -24,6 +24,10 @@ Label Root
 				Param: IdConsumer
 				Param: NumConsumers
 				Param: alpha
+				Param: AvPrice
+				Func: ComputeDemandSize
+				Param: MaxDemand
+				Param: cDemand
 
 			}
 
@@ -118,8 +122,12 @@ Param: cg 0 n + n n	0.4	0.1
 Var: ce 0 n + n n
 Param: cb 0 n + n n	0.4	0.1
 Param: IdConsumer 0 n + n n	0	0
-Param: NumConsumers 0 n + n n	10000	10000
+Param: NumConsumers 0 s + n n	10000	10000
 Param: alpha 0 n + n n	10	10
+Param: AvPrice 0 n + n n	0	0
+Func: ComputeDemandSize 0 n + n n
+Param: MaxDemand 0 n + n n	10000	10000
+Param: cDemand 0 n + n n	100	100
 
 Object: CFirm C	1	1
 Param: msC 1 n + n n	0	0
@@ -285,6 +293,30 @@ Parameter_alpha
 (no description available)
 _INIT_
 
+END_DESCRIPTION
+
+Parameter_AvPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeDemandSize
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MaxDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 10000.
+END_DESCRIPTION
+
+Parameter_cDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 100.
 END_DESCRIPTION
 
 Object_CFirm

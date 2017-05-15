@@ -10,7 +10,7 @@ Perform the same computation to compute sales (PurchaseTime) but does not record
 
 */
 
-v[0]=v[1]=v[2]=v[3]=v[4]=0;
+v[0]=v[1]=v[2]=v[3]=v[4]=v[30]=v[31]=0;
 CYCLE(cur, "ConsumerClass")
  {
   v[0]=VS(cur,"ce");
@@ -19,24 +19,32 @@ CYCLE(cur, "ConsumerClass")
   v[5]=VS(cur,"alpha");
   v[3]=0;
   CYCLES(cur, cur1, "CFirm")
-   { if(cur1->hook!=c)
+   { 
+     v[31]++;
+     if(cur1->hook!=c)
       {
        v[10]=VS(cur1->hook,"e");
        v[11]=VS(cur1->hook,"b"); 
        v[12]=VS(cur1->hook,"g"); 
+       v[30]+=V_CHEAT("ComputePrice",cur1->hook);
       }
      else
       {
        v[10]=VS(cur1->hook,"e_inn");
        v[11]=VS(cur1->hook,"b_inn"); 
        v[12]=VS(cur1->hook,"g_inn"); 
+       v[30]+=V_CHEAT("ComputePrice",cur1->hook);       
       }        
      v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
      v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
    }
-  v[14]=VS(cur,"NumConsumers");
+  v[32]=v[30]/v[31]; //average price
+  v[34]=VS(cur,"AvPrice");
+  WRITES(cur,"AvPrice",v[32]);
+  v[14]=VS(cur,"ComputeDemandSize"); 
+  WRITES(cur,"AvPrice",v[34]);
 
   CYCLES(cur, cur1, "CFirm")
    {
@@ -62,7 +70,7 @@ Variable ensuring that all consumer classes completed their purchases
 */
 
 V("PreMarketTime");
-v[0]=v[1]=v[2]=v[3]=v[4]=0;
+v[0]=v[1]=v[2]=v[3]=v[4]=v[30]=v[31]=0;
 CYCLE(cur, "ConsumerClass")
  {
   v[0]=VS(cur,"ce");
@@ -79,8 +87,13 @@ CYCLE(cur, "ConsumerClass")
      v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
+     v[30]+=V_CHEAT("ComputePrice",cur1->hook); 
+     v[31]++;    
+     
    }
-  v[14]=VS(cur,"NumConsumers");
+  WRITES(cur,"AvPrice",v[30]/v[31]); 
+  v[14]=VS(cur,"ComputeDemandSize");
+  WRITES(cur,"NumConsumers",v[14]);
 
   CYCLES(cur, cur1, "CFirm")
    {
@@ -127,10 +140,30 @@ RESULT(v[0]/v[1] )
 
 EQUATION("TotClients")
 /*
-Total income spent
+Total sales
 */
 
-RESULT(SUM("NumConsumers") )
+v[0]=0;
+CYCLE(cur, "ConsumerClass")
+ {
+  v[0]+=VS(cur,"ComputeDemandSize");
+ }
+
+RESULT(v[0])
+
+
+EQUATION("ComputeDemandSize")
+/*
+Comment
+*/
+
+v[0]=V("MaxDemand");
+v[1]=V("cDemand");
+v[2]=V("AvPrice");
+v[3]=v[0]-v[1]*v[2];
+if(v[3]<0)
+ v[3]=0;
+RESULT(v[3] )
 
 EQUATION("ComputeProfits")
 /*
