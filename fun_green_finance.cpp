@@ -324,26 +324,36 @@ EQUATION("MaxPrice")
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=0;
 V("ActionMarket");
 
+
+v[1]=v[2]=V("Price");
+
 CYCLE(cur, "Firm")
- {
-  if(v[0]==0)
-   {v[0]=1;
-   v[1]=v[2]=VS(cur,"Price");
-   }
-  else
-   {
+ {v[0]++;
+  
+  v[5]+=VS(cur,"Cost");
+  v[6]+=VS(cur,"b");
+  v[7]+=VS(cur,"g");
+  v[8]+=VS(cur,"e");
+  v[9]+=VS(cur,"markup");
+  v[10]+=VS(cur,"Price"); 
     v[3]=VS(cur,"Price");
     if(v[3]>v[1])
      v[1]=v[3];
     if(v[3]<v[2])
      v[2]=v[3]; 
-   } 
  }
 
 WRITE("MinPrice",v[2]);
+WRITE("AvCost",v[5]/v[0]);
+WRITE("Avb",v[6]/v[0]);
+WRITE("Avg",v[7]/v[0]);
+WRITE("Ave",v[8]/v[0]);
+WRITE("Avmup",v[9]/v[0]);
+WRITE("AvP",v[10]/v[0]);
+
 RESULT(v[1] )
 
 EQUATION("Price")

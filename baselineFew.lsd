@@ -81,6 +81,12 @@ Label Root
 			Param: delta_markup
 			Func: ComputeProfits
 			Var: ActionMarket
+			Param: AvCost
+			Param: Avb
+			Param: Avg
+			Param: Ave
+			Param: Avmup
+			Param: AvP
 
 		}
 
@@ -118,9 +124,9 @@ Param: max 0 n + n n	102	102	102	102	102	102	102	102	102	102
 Object: Demand C	1	1	1	1	1	1	1	1	1	1
 
 Object: ConsumerClass C	1	1	1	1	1	1	1	1	1	1
-Param: cg 0 n + n n	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3
+Param: cg 0 n + n n	0	0	0	0	0	0	0	0	0	0
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3
+Param: cb 0 n + n n	0	0.1	0.2	0.3	0.4	0.5	0.6	0.7	0.8	0.9
 Param: IdConsumer 0 n + n n	0	0	0	0	0	0	0	0	0	0
 Param: NumConsumers 0 s + n n	10000	10000	10000	10000	10000	10000	10000	10000	10000	10000
 Param: alpha 0 n + n n	10	10	10	10	10	10	10	10	10	10
@@ -134,7 +140,7 @@ Param: msC 1 n + n n	0	0	0	0	0	0	0	0	0	0
 Param: cfapp 0 n + n n	0	0	0	0	0	0	0	0	0	0
 
 Object: Supply C	1	1	1	1	1	1	1	1	1	1
-Param: numFirm 0 n + n n	2	2	2	2	2	2	2	2	2	2
+Param: numFirm 0 n + n n	20	20	20	20	20	20	20	20	20	20
 Func: GaInE 0 n + d n
 Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
@@ -153,6 +159,12 @@ Func: GainPrice 0 n + n n
 Param: delta_markup 0 n + n n	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01
 Func: ComputeProfits 0 n + n n
 Var: ActionMarket 0 n + n n
+Param: AvCost 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: Avb 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: Avg 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: Ave 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: Avmup 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: AvP 0 s + n n	0	0	0	0	0	0	0	0	0	0
 
 Object: Firm C	1	1	1	1	1	1	1	1	1	1
 Func: ActionFirm 0 s + d n
@@ -262,7 +274,7 @@ END_DESCRIPTION
 Parameter_cg
 (no description available)
 _INIT_
-
+ All 10 instances equal to 0.
 END_DESCRIPTION
 
 Variable_ce
@@ -274,7 +286,7 @@ END_DESCRIPTION
 Parameter_cb
 (no description available)
 _INIT_
-
+ All 10 instances set ranging from 0 to 0.9 (i.e. increments of 0.1).
 END_DESCRIPTION
 
 Parameter_IdConsumer
@@ -346,7 +358,7 @@ END_DESCRIPTION
 Parameter_numFirm
 (no description available)
 _INIT_
-
+ All 10 instances equal to 20.
 END_DESCRIPTION
 
 Function_GaInE
@@ -452,6 +464,42 @@ _INIT_
 END_DESCRIPTION
 
 Variable_ActionMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Ave
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avmup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvP
 (no description available)
 _INIT_
 
