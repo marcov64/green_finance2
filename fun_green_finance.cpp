@@ -83,8 +83,13 @@ CYCLE(cur, "ConsumerClass")
      v[10]=VS(cur1->hook,"e");
      v[11]=VS(cur1->hook,"b"); 
      v[12]=VS(cur1->hook,"g"); 
-     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
-     v[14]=pow(v[13],v[5]);
+     if(v[10]<0.000001 || v[11]<0.000001 || v[12]<0.000001)
+      v[14]==0;
+     else
+      { 
+       v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
+       v[14]=pow(v[13],v[5]);
+      } 
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
      v[30]+=V_CHEAT("ComputePrice",cur1->hook); 
@@ -207,7 +212,62 @@ RESULT(v[0] )
 
 EQUATION("ActionFirm")
 /*
+Choose randomly which innovation to perform
+*/
 
+v[20]=V("Pe");
+v[21]=V("Pb");
+v[22]=V("Pg");
+
+v[23]=RND;
+if(v[23]<v[20])
+ v[0]=1;
+else
+ {
+  if(v[23]<v[20]+v[21])
+    v[0]=2;
+  else
+    v[0]=3;  
+ } 
+
+v[1]=V("ImproveInn");
+v[2]=V("CostInn");
+v[13]=v[3]=V("Cost");
+v[14]=v[4]=V("b");
+v[15]=v[5]=V("g");
+
+if(v[0]==1)
+ {
+  v[13]=v[3]-v[1];
+  if(v[13]<0) v[13]=0;
+  v[14]=v[4]-v[2];
+  v[15]=v[5]-v[2];
+ }
+ 
+if(v[0]==2)
+ {
+  v[13]=v[3]+v[2];
+  v[14]=v[4]+v[1];
+  v[15]=v[5]-v[2];
+ }
+if(v[0]==3)
+ {
+  v[13]=v[3]+v[2];
+  v[14]=v[4]-v[2];
+  v[15]=v[5]+v[1];
+ }
+
+WRITE("Cost",v[13]);
+WRITE("b",v[14]);
+WRITE("g",v[15]);
+
+RESULT(v[0] )
+
+EQUATION("ActionFirmXXX")
+/*
+OLD
+1) first markup
+2) failing 1) use Choose Innovation
 */
 
 v[0]=V("Profit");
@@ -584,7 +644,12 @@ CYCLE(cur, "Firm")
    WRITELS(cur,"e",v[20], t);   
    WRITES(cur,"g",UNIFORM(v[8],v[9]));
    WRITES(cur,"b",UNIFORM(v[8],v[9]));
-   
+   v[21]=RND; v[22]=RND; v[23]=RND;
+   v[24]=v[21]+v[22]+v[23];
+   WRITES(cur,"Pe",v[21]/v[24]);
+   WRITES(cur,"Pg",v[22]/v[24]);
+   WRITES(cur,"Pb",v[23]/v[24]);   
+   WRITELS(cur,"ms",1/v[5], t-1);
   }
 cur1=SEARCH("Demand");
 v[2]=1;

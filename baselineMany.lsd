@@ -143,7 +143,7 @@ Param: msC 1 n + n n	0
 Param: cfapp 0 n + n n	0
 
 Object: Supply C	1
-Param: numFirm 0 n + n n	100
+Param: numFirm 0 n + n n	1000
 Func: GaInE 0 n + d n
 Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
