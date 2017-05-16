@@ -1,0 +1,618 @@
+	
+Label Root
+{
+	Son: Market
+	Label Market
+	{
+		Son: Demand
+		Label Demand
+		{
+			Son: ConsumerClass
+			Label ConsumerClass
+			{
+				Son: CFirm
+				Label CFirm
+				{
+					Param: msC
+					Param: cfapp
+
+				}
+
+				Param: cg
+				Var: ce
+				Param: cb
+				Param: IdConsumer
+				Param: NumConsumers
+				Param: alpha
+				Param: AvPrice
+				Func: ComputeDemandSize
+				Param: MaxDemand
+				Param: cDemand
+
+			}
+
+
+		}
+
+		Son: Supply
+		Label Supply
+		{
+			Son: Firm
+			Label Firm
+			{
+				Func: ActionFirm
+				Var: e
+				Param: b
+				Param: g
+				Param: IdFirm
+				Param: Sales
+				Param: Lost
+				Var: Clients
+				Var: ms
+				Param: e_inn
+				Param: b_inn
+				Param: g_inn
+				Func: ChooseInnovation
+				Func: Innovate
+				Param: Cost
+				Var: Price
+				Param: markup
+				Var: Savings
+				Var: Profit
+
+			}
+
+			Param: numFirm
+			Func: GaInE
+			Func: GaInG
+			Func: GaInB
+			Param: ImproveInn
+			Param: CostInn
+			Func: ComputePrice
+			Func: ComputeE
+			Var: MaxPrice
+			Param: MinPrice
+			Param: MaxE
+			Param: SlopeE
+			Param: CenterE
+			Param: minCost
+			Param: maxCost
+			Func: GainPrice
+			Param: delta_markup
+			Func: ComputeProfits
+			Var: ActionMarket
+
+		}
+
+		Var: InitMarket
+		Var: PreMarketTime
+		Var: PurchaseTime
+		Param: probPurchase
+		Var: TotClients
+		Param: sClients
+		Func: TestInnovation
+		Param: min
+		Param: max
+
+	}
+
+
+}
+
+
+DATA
+
+Object: Root C	1
+
+Object: Market C	10
+Var: InitMarket 0 n + d n
+Var: PreMarketTime 0 n + d n
+Var: PurchaseTime 0 n + d n
+Param: probPurchase 0 n + n n	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2
+Var: TotClients 0 n + n n
+Param: sClients 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Func: TestInnovation 0 n + n n
+Param: min 0 n + n n	98	98	98	98	98	98	98	98	98	98
+Param: max 0 n + n n	102	102	102	102	102	102	102	102	102	102
+
+Object: Demand C	1	1	1	1	1	1	1	1	1	1
+
+Object: ConsumerClass C	1	1	1	1	1	1	1	1	1	1
+Param: cg 0 n + n n	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3
+Var: ce 0 n + n n
+Param: cb 0 n + n n	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3
+Param: IdConsumer 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Param: NumConsumers 0 s + n n	10000	10000	10000	10000	10000	10000	10000	10000	10000	10000
+Param: alpha 0 n + n n	10	10	10	10	10	10	10	10	10	10
+Param: AvPrice 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Func: ComputeDemandSize 0 n + n n
+Param: MaxDemand 0 n + n n	10000	10000	10000	10000	10000	10000	10000	10000	10000	10000
+Param: cDemand 0 n + n n	100	100	100	100	100	100	100	100	100	100
+
+Object: CFirm C	1	1	1	1	1	1	1	1	1	1
+Param: msC 1 n + n n	0	0	0	0	0	0	0	0	0	0
+Param: cfapp 0 n + n n	0	0	0	0	0	0	0	0	0	0
+
+Object: Supply C	1	1	1	1	1	1	1	1	1	1
+Param: numFirm 0 n + n n	2	2	2	2	2	2	2	2	2	2
+Func: GaInE 0 n + d n
+Func: GaInG 0 n + d n
+Func: GaInB 0 n + d n
+Param: ImproveInn 0 n + n n	1	1	1	1	1	1	1	1	1	1
+Param: CostInn 0 n + n n	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2
+Func: ComputePrice 0 n + n n
+Func: ComputeE 0 n + n n
+Var: MaxPrice 1 n + n n	160	160	160	160	160	160	160	160	160	160
+Param: MinPrice 0 n + n n	100	100	100	100	100	100	100	100	100	100
+Param: MaxE 0 n + n n	200	200	200	200	200	200	200	200	200	200
+Param: SlopeE 0 n + n n	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1
+Param: CenterE 0 n + n n	100	100	100	100	100	100	100	100	100	100
+Param: minCost 0 n + n n	50	50	50	50	50	50	50	50	50	50
+Param: maxCost 0 n + n n	50	50	50	50	50	50	50	50	50	50
+Func: GainPrice 0 n + n n
+Param: delta_markup 0 n + n n	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01
+Func: ComputeProfits 0 n + n n
+Var: ActionMarket 0 n + n n
+
+Object: Firm C	1	1	1	1	1	1	1	1	1	1
+Func: ActionFirm 0 s + d n
+Var: e 0 s + n n
+Param: b 0 s + n n	101.382	101.382	101.382	101.382	101.382	101.382	101.382	101.382	101.382	101.382
+Param: g 0 s + n n	101.822	101.822	101.822	101.822	101.822	101.822	101.822	101.822	101.822	101.822
+Param: IdFirm 0 n + n n	1	1	1	1	1	1	1	1	1	1
+Param: Sales 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Param: Lost 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Var: Clients 1 n + n n	0	0	0	0	0	0	0	0	0	0
+Var: ms 1 s + n n	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01	0.01
+Param: e_inn 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Param: b_inn 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Param: g_inn 0 n + n n	0	0	0	0	0	0	0	0	0	0
+Func: ChooseInnovation 0 s + n n
+Func: Innovate 0 n + n n
+Param: Cost 0 s + n n	0	0	0	0	0	0	0	0	0	0
+Var: Price 0 s + n n
+Param: markup 0 s + n n	0.4	0.4	0.4	0.4	0.4	0.4	0.4	0.4	0.4	0.4
+Var: Savings 1 s + n n	0	0	0	0	0	0	0	0	0	0
+Var: Profit 0 s + n n
+
+SIM_NUM 1
+SEED 2
+MAX_STEP 20000
+EQUATION fun_green_finance.cpp
+ MODELREPORT modelreport.html
+
+DESCRIPTION
+
+Object_Root
+(no description available)
+END_DESCRIPTION
+
+Object_Market
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_InitMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PreMarketTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PurchaseTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_probPurchase
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_TotClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_sClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_TestInnovation
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_min
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_max
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Demand
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Object_ConsumerClass
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ce
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_IdConsumer
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_NumConsumers
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_alpha
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeDemandSize
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MaxDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 10000.
+END_DESCRIPTION
+
+Parameter_cDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 100.
+END_DESCRIPTION
+
+Object_CFirm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_msC
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cfapp
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Supply
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_numFirm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_GaInE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_GaInG
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_GaInB
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ImproveInn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_CostInn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputePrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_MaxPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MinPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MaxE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_SlopeE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_CenterE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_minCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_maxCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_GainPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_delta_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeProfits
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ActionMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Firm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Function_ActionFirm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_e
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_b
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_g
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_IdFirm
+(no description available)
+_INIT_
+ All 100 instances increasing from 1 with steps 1. The value is increased every 1 instances.
+END_DESCRIPTION
+
+Parameter_Sales
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Lost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Clients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ms
+(no description available)
+_INIT_
+ All 100 instances equal to 0.01.
+END_DESCRIPTION
+
+Parameter_e_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_b_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_g_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ChooseInnovation
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_Innovate
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Cost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Price
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Savings
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Profit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+#include "fun_head.h"
+
+MODELBEGIN
+
+
+
+
+
+
+
+
+
+
+
+MODELEND
+
+
+
+
+void close_sim(void)
+{
+
+}
+
+
+
+END_EQ_FILE

@@ -392,8 +392,10 @@ v[8]=V_CHEAT("TestInnovation",c);
 WRITES(c,"markup",v[2]);
 
 if(v[8]<v[7])
- v[8]*=-1; 
-RESULT(v[8] )
+ v[9]=-1*v[7]; 
+else
+ v[9]=v[8]; 
+RESULT(v[9] )
 
 
 EQUATION("GaInE")
@@ -401,10 +403,13 @@ EQUATION("GaInE")
 Assess the gain in improving E
 */
 
+/*
 v[10]=V_CHEAT("ApplyLoanE",c);
 if(v[10]==-1)
  END_EQUATION(0);
- 
+*/
+v[10]=0;
+
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
 
@@ -430,9 +435,13 @@ EQUATION("GaInB")
 Assess the gain in improving B
 */
 
+/*
 v[10]=V_CHEAT("ApplyLoanB",c);
 if(v[10]==-1)
  END_EQUATION(0);
+*/
+
+v[10]=0;
 
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
@@ -459,10 +468,13 @@ EQUATION("GaInG")
 Assess the gain in improving G
 */
 
+/*
 v[10]=V_CHEAT("ApplyLoanG",c);
 if(v[10]==-1)
  END_EQUATION(0);
+*/
 
+v[10]=0;
 v[0]=V("ImproveInn");
 v[1]=V("CostInn");
 
