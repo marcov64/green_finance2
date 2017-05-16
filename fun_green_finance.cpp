@@ -83,13 +83,8 @@ CYCLE(cur, "ConsumerClass")
      v[10]=VS(cur1->hook,"e");
      v[11]=VS(cur1->hook,"b"); 
      v[12]=VS(cur1->hook,"g"); 
-     if(v[10]<0.000001 || v[11]<0.000001 || v[12]<0.000001)
-      v[14]==0;
-     else
-      { 
-       v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
-       v[14]=pow(v[13],v[5]);
-      } 
+     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
+     v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
      v[30]+=V_CHEAT("ComputePrice",cur1->hook); 
@@ -239,7 +234,7 @@ v[15]=v[5]=V("g");
 if(v[0]==1)
  {
   v[13]=v[3]-v[1];
-  if(v[13]<0) v[13]=0;
+  if(v[13]<=0) v[13]=0.01;
   v[14]=v[4]-v[2];
   v[15]=v[5]-v[2];
  }
@@ -257,9 +252,9 @@ if(v[0]==3)
   v[15]=v[5]+v[1];
  }
 
-WRITE("Cost",v[13]);
-WRITE("b",v[14]);
-WRITE("g",v[15]);
+WRITE("Cost",v[13]<0.0001?0.0001:v[13]);
+WRITE("b",v[14]<0.0001?0.0001:v[14]);
+WRITE("g",v[15]<0.0001?0.0001:v[15]);
 
 RESULT(v[0] )
 
