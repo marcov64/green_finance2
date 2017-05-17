@@ -206,6 +206,67 @@ CYCLE(cur, "Firm")
 
 RESULT(v[0] )
 
+EQUATION("EntryExit")
+/*
+Comment
+*/V("ActionMarket");
+
+v[3]=v[4]=v[5]=0;
+cur1=SEARCH("Supply");
+
+CYCLE_SAFES(cur1, cur, "Firm")
+ {
+  v[0]=VS(cur,"ActionFirm");
+  if(v[0]==0)
+   {
+    v[1]=VS(cur,"ms");
+    if(v[1]<0.00001)
+     {
+      CYCLE(cur3, "ConsumerClass")
+       {
+        CYCLE2_SAFES(cur3, cur5, "CFirm")
+         {
+          if(cur5->hook==cur)
+           DELETE(cur5);
+         }
+       }
+      DELETE(cur);
+      v[3]++;
+     } 
+   }
+ }
+
+WRITE("numExit",v[3]);
+v[0]=V("probEntry");
+if(RND<v[0])
+ {v[4]=1;
+  v[7]=V("IssueID");
+  cur=ADDOBJS(cur1,"Firm");
+  WRITES(cur,"IdFirm",v[7]);  
+  WRITELS(cur,"Price",V("AvP"),t);
+  WRITES(cur,"e",V("Ave"));  
+  WRITES(cur,"b",V("Avb"));   
+  WRITES(cur,"g",V("Avg"));    
+  WRITES(cur,"Cost",V("AvCost"));
+  WRITES(cur,"markup",V("Avmup"));  
+  WRITES(cur,"InnType",0);   
+   v[21]=RND; v[22]=RND; v[23]=RND;
+   v[24]=v[21]+v[22]+v[23];
+   WRITES(cur,"Pe",v[21]/v[24]);
+   WRITES(cur,"Pg",v[22]/v[24]);
+   WRITES(cur,"Pb",v[23]/v[24]); 
+  CYCLE(cur2, "ConsumerClass")
+   {
+    cur2=ADDOBJS(cur2,"CFirm");
+    cur2->hook=cur;
+   }
+     
+ }
+ 
+v[9]=INCRS(cur1,"numFirm",v[4]-v[3]);
+
+RESULT(v[9] )
+
 EQUATION("BidLoan")
 /*
 The caller ask for a loan in order to:
@@ -663,6 +724,13 @@ RESULT(-1 )
 ******** INITIALIZATION **********************
 **********************************************/
 
+EQUATION("IssueID")
+/*
+Comment
+*/
+
+RESULT(CURRENT+1 )
+
 EQUATION("InitMarket")
 /*
 Initialization of the market. 
@@ -683,7 +751,8 @@ v[18]=V("minCost");
 v[19]=V("maxCost");
 CYCLE(cur, "Firm")
   {
-   WRITES(cur,"IdFirm",v[7]++);
+   v[7]=V("IssueID");
+   WRITES(cur,"IdFirm",v[7]);
    WRITELS(cur,"Clients",v[6], t-1);
    WRITES(cur,"Cost",UNIFORM(v[18],v[19]));
    v[21]=V_CHEAT("ComputePrice",cur);
