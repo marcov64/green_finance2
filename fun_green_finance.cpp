@@ -213,6 +213,8 @@ Comment
 
 v[3]=v[4]=v[5]=0;
 cur1=SEARCH("Supply");
+v[30]=V("thresholdExit");
+v[31]=V("minAgeExit");
 
 CYCLE_SAFES(cur1, cur, "Firm")
  {
@@ -220,7 +222,7 @@ CYCLE_SAFES(cur1, cur, "Firm")
   if(v[0]==0)
    {
     v[1]=VS(cur,"ms");
-    if(v[1]<0.00001 && VS(cur,"Age")>10)
+    if(v[1]<v[30] && VS(cur,"Age")>v[31])
      {
       CYCLE(cur3, "ConsumerClass")
        {
