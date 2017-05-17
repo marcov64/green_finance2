@@ -133,7 +133,7 @@ Var: InitMarket 0 n + d n
 Var: PreMarketTime 0 n + d n
 Var: PurchaseTime 0 n + d n
 Param: probPurchase 0 n + n n	0.2
-Var: TotClients 0 n + n n
+Var: TotClients 0 s + n n
 Param: sClients 0 n + n n	0
 Func: TestInnovation 0 n + n n
 Param: min 0 n + n n	98
@@ -172,7 +172,7 @@ Param: msC 1 n + n n	0
 Param: cfapp 0 n + n n	0
 
 Object: Supply C	1
-Param: numFirm 0 n + n n	10
+Param: numFirm 0 s + n n	10
 Func: GaInE 0 n + d n
 Func: GaInG 0 n + d n
 Func: GaInB 0 n + d n
@@ -267,13 +267,16 @@ END_DESCRIPTION
 
 Variable_TotClients
 (no description available)
+
 _INIT_
 
 END_DESCRIPTION
 
 Parameter_sClients
 (no description available)
+
 _INIT_
+
 
 END_DESCRIPTION
 

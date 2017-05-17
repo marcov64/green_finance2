@@ -502,13 +502,14 @@ v[1]=v[2]=V("Price");
 CYCLE(cur, "Firm")
  {v[0]++;
   
-  v[5]+=VS(cur,"Cost");
-  v[6]+=VS(cur,"b");
-  v[7]+=VS(cur,"g");
-  v[8]+=VS(cur,"e");
-  v[9]+=VS(cur,"markup");
-  v[10]+=VS(cur,"Price"); 
-    v[3]=VS(cur,"Price");
+  v[4]=VS(cur,"ms");
+  v[5]+=VS(cur,"Cost")*v[4];
+  v[6]+=VS(cur,"b")*v[4];
+  v[7]+=VS(cur,"g")*v[4];
+  v[8]+=VS(cur,"e")*v[4];
+  v[9]+=VS(cur,"markup")*v[4];
+  v[10]+=VS(cur,"Price")*v[4]; 
+    v[3]=VS(cur,"Price")*v[4];
     if(v[3]>v[1])
      v[1]=v[3];
     if(v[3]<v[2])
@@ -516,12 +517,12 @@ CYCLE(cur, "Firm")
  }
 
 WRITE("MinPrice",v[2]);
-WRITE("AvCost",v[5]/v[0]);
-WRITE("Avb",v[6]/v[0]);
-WRITE("Avg",v[7]/v[0]);
-WRITE("Ave",v[8]/v[0]);
-WRITE("Avmup",v[9]/v[0]);
-WRITE("AvP",v[10]/v[0]);
+WRITE("AvCost",v[5]);
+WRITE("Avb",v[6]);
+WRITE("Avg",v[7]);
+WRITE("Ave",v[8]);
+WRITE("Avmup",v[9]);
+WRITE("AvP",v[10]);
 
 RESULT(v[1] )
 
