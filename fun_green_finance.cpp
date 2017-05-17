@@ -220,7 +220,7 @@ CYCLE_SAFES(cur1, cur, "Firm")
   if(v[0]==0)
    {
     v[1]=VS(cur,"ms");
-    if(v[1]<0.00001)
+    if(v[1]<0.00001 && VS(cur,"Age")>10)
      {
       CYCLE(cur3, "ConsumerClass")
        {
@@ -255,6 +255,7 @@ if(RND<v[0])
    WRITES(cur,"Pe",v[21]/v[24]);
    WRITES(cur,"Pg",v[22]/v[24]);
    WRITES(cur,"Pb",v[23]/v[24]); 
+   WRITES(cur,"ms",0); 
   CYCLE(cur2, "ConsumerClass")
    {
     cur2=ADDOBJS(cur2,"CFirm");
@@ -501,7 +502,7 @@ EQUATION("MaxPrice")
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=0;
 V("ActionMarket");
 
 
@@ -516,6 +517,10 @@ CYCLE(cur, "Firm")
   v[6]+=VS(cur,"b")*v[4];
   v[7]+=VS(cur,"g")*v[4];
   v[8]+=VS(cur,"e")*v[4];
+  v[12]+=VS(cur,"Pb")*v[4];
+  v[13]+=VS(cur,"Pg")*v[4];
+  v[14]+=VS(cur,"Pe")*v[4];
+
   v[9]+=VS(cur,"markup")*v[4];
   v[10]+=VS(cur,"Price")*v[4]; 
     v[3]=VS(cur,"Price")*v[4];
@@ -531,6 +536,10 @@ WRITE("AvCost",v[5]);
 WRITE("Avb",v[6]);
 WRITE("Avg",v[7]);
 WRITE("Ave",v[8]);
+WRITE("AvPb",v[12]);
+WRITE("AvPg",v[13]);
+WRITE("AvPe",v[14]);
+
 WRITE("Avmup",v[9]);
 WRITE("AvP",v[10]);
 

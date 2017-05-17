@@ -93,6 +93,9 @@ Label Root
 			Param: Avmup
 			Param: AvP
 			Param: AvAge
+			Param: AvPb
+			Param: AvPg
+			Param: AvPe
 
 		}
 
@@ -158,16 +161,16 @@ Param: numExit 0 s + n n	0
 Object: Demand C	1
 
 Object: ConsumerClass C	1
-Param: cg 0 n + n n	0.5
+Param: cg 0 n + n n	0.3333
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.5
+Param: cb 0 n + n n	0.3333
 Param: IdConsumer 0 n + n n	0
 Param: NumConsumers 0 s + n n	10000
 Param: alpha 0 n + n n	10
 Param: AvPrice 0 n + n n	0
 Func: ComputeDemandSize 0 n + n n
 Param: MaxDemand 0 n + n n	10000
-Param: cDemand 0 n + n n	100
+Param: cDemand 0 n + n n	0
 
 Object: CFirm C	1
 Param: msC 1 n + n n	0
@@ -200,6 +203,9 @@ Param: Ave 0 s + n n	0
 Param: Avmup 0 s + n n	0
 Param: AvP 0 s + n n	0
 Param: AvAge 0 s + n n	0
+Param: AvPb 0 s + n n	0
+Param: AvPg 0 s + n n	0
+Param: AvPe 0 s + n n	0
 
 Object: Firm C	1
 Var: ActionFirm 1 s + n n	0
@@ -632,6 +638,30 @@ END_DESCRIPTION
 Parameter_AvAge
 (no description available)
 _INIT_
+
+END_DESCRIPTION
+
+Parameter_AvPb
+(no description available)
+
+_INIT_
+
+
+END_DESCRIPTION
+
+Parameter_AvPg
+(no description available)
+
+_INIT_
+
+
+END_DESCRIPTION
+
+Parameter_AvPe
+(no description available)
+
+_INIT_
+
 
 END_DESCRIPTION
 
