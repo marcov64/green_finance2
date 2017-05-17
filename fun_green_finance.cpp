@@ -353,24 +353,32 @@ if(v[1]==1)
   v[15]=v[5]-v[2];
  }
  
-if(v[0]==2)
+if(v[1]==2)
  {
   v[13]=v[3]+v[2];
   v[14]=v[4]+v[11];
   v[15]=v[5]-v[2];
  }
-if(v[0]==3)
+if(v[1]==3)
  {
   v[13]=v[3]+v[2];
   v[14]=v[4]-v[2];
   v[15]=v[5]+v[11];
  }
 
+
 WRITE("Cost",v[13]<0.0001?0.0001:v[13]);
 WRITE("b",v[14]<0.0001?0.0001:v[14]);
 WRITE("g",v[15]<0.0001?0.0001:v[15]);
 WRITE("InnType",0);
 RESULT(0)
+
+EQUATION("Age")
+/*
+Comment
+*/
+
+RESULT(CURRENT+1 )
 
 EQUATION("ActionFirmXXX")
 /*
@@ -493,7 +501,7 @@ EQUATION("MaxPrice")
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=0;
 V("ActionMarket");
 
 
@@ -503,6 +511,7 @@ CYCLE(cur, "Firm")
  {v[0]++;
   
   v[4]=VS(cur,"ms");
+  v[11]+=VS(cur,"Age")*v[4];
   v[5]+=VS(cur,"Cost")*v[4];
   v[6]+=VS(cur,"b")*v[4];
   v[7]+=VS(cur,"g")*v[4];
@@ -516,6 +525,7 @@ CYCLE(cur, "Firm")
      v[2]=v[3]; 
  }
 
+WRITE("AvAge",v[11]);
 WRITE("MinPrice",v[2]);
 WRITE("AvCost",v[5]);
 WRITE("Avb",v[6]);
