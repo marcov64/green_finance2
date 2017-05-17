@@ -198,42 +198,95 @@ EQUATION("ActionMarket")
 /*
 Pick one firm and let her make her move
 */
-cur=RNDDRAWFAIR("Firm");
 
-VS(cur,"ActionFirm");
-v[0]=VS(cur,"IdFirm");
+CYCLE(cur, "Firm")
+ {
+  VS(cur,"ActionFirm");
+ }
 
 RESULT(v[0] )
+
+EQUATION("BidLoan")
+/*
+The caller ask for a loan in order to:
+1) reduce cost
+2) increase brown q.
+3) increase green q.
+*/
+
+v[0]=VS(c,"InnType");
+if(v[0]==1)
+ v[1]=V("ProbLoanCost");
+if(v[0]==2)
+ v[1]=V("ProbLoanBrown");
+if(v[0]==3)
+ v[1]=V("ProbLoanGreen");
+
+if(RND>v[1])
+ END_EQUATION(0);
+if(v[0]==1)
+ v[3]=V("LengthCost");
+if(v[0]==2)
+ v[3]=V("LengthBrown");
+if(v[0]==3)
+ v[3]=V("LengthGreen");
+   
+
+RESULT(v[3] )
 
 EQUATION("ActionFirm")
 /*
 Choose randomly which innovation to perform
 */
 
-v[20]=V("Pe");
-v[21]=V("Pb");
-v[22]=V("Pg");
+v[0]=VL("ActionFirm",1);
+if(v[0]>0)
+ END_EQUATION(v[0]-1)
 
-v[23]=RND;
-if(v[23]<v[20])
- v[0]=1;
-else
- {
-  if(v[23]<v[20]+v[21])
-    v[0]=2;
+v[1]=V("InnType");
+if(v[1]==0)
+  { 
+  v[20]=V("Pe");
+  v[21]=V("Pb");
+  v[22]=V("Pg");
+  
+  v[23]=RND;
+  if(v[23]<v[20])
+   v[0]=1;
   else
-    v[0]=3;  
- } 
+   {
+    if(v[23]<v[20]+v[21])
+      v[0]=2;
+    else
+      v[0]=3;  
+   }
+  WRITE("InnType",v[0]);  
+  v[10]=V("BidLoan");
+  END_EQUATION(v[10]);
+ }  
 
-v[1]=V("ImproveInn");
+if(v[1]==1)
+ v[6]=V("ProbSuccCost");
+if(v[1]==2)
+ v[6]=V("ProbSuccBrown");
+if(v[1]==3)
+ v[6]=V("ProbSuccGreen");
+
+if(RND>v[6])//Innovation failed
+ {
+  WRITE("InnType",0);
+  END_EQUATION(0);
+ } 
+ 
+v[11]=V("ImproveInn");
 v[2]=V("CostInn");
 v[13]=v[3]=V("Cost");
 v[14]=v[4]=V("b");
 v[15]=v[5]=V("g");
 
-if(v[0]==1)
+if(v[1]==1)
  {
-  v[13]=v[3]-v[1];
+  v[13]=v[3]-v[11];
   if(v[13]<=0) v[13]=0.01;
   v[14]=v[4]-v[2];
   v[15]=v[5]-v[2];
@@ -242,21 +295,21 @@ if(v[0]==1)
 if(v[0]==2)
  {
   v[13]=v[3]+v[2];
-  v[14]=v[4]+v[1];
+  v[14]=v[4]+v[11];
   v[15]=v[5]-v[2];
  }
 if(v[0]==3)
  {
   v[13]=v[3]+v[2];
   v[14]=v[4]-v[2];
-  v[15]=v[5]+v[1];
+  v[15]=v[5]+v[11];
  }
 
 WRITE("Cost",v[13]<0.0001?0.0001:v[13]);
 WRITE("b",v[14]<0.0001?0.0001:v[14]);
 WRITE("g",v[15]<0.0001?0.0001:v[15]);
-
-RESULT(v[0] )
+WRITE("InnType",0);
+RESULT(0)
 
 EQUATION("ActionFirmXXX")
 /*
