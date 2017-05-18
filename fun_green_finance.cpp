@@ -84,6 +84,7 @@ CYCLE(cur, "ConsumerClass")
      v[11]=VS(cur1->hook,"b"); 
      v[12]=VS(cur1->hook,"g"); 
      v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
+//     v[13]=pow(v[12],v[2])*pow(v[11],v[1]);
      v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
@@ -242,15 +243,18 @@ WRITE("numExit",v[3]);
 v[0]=V("probEntry");
 if(RND<v[0])
  {v[4]=1;
+ v[21]=V("ShareValuesNewEntrants");
   v[7]=V("IssueID");
   cur=ADDOBJS(cur1,"Firm");
   WRITES(cur,"IdFirm",v[7]);  
-  WRITELS(cur,"Price",V("AvP"),t);
-  WRITES(cur,"e",V("Ave"));  
-  WRITES(cur,"b",V("Avb"));   
-  WRITES(cur,"g",V("Avg"));    
-  WRITES(cur,"Cost",V("AvCost"));
+  WRITES(cur,"b",V("Avb")*v[21]);   
+  WRITES(cur,"g",V("Avg")*v[21]);    
+  WRITES(cur,"Cost",V("AvCost")*v[21]);
   WRITES(cur,"markup",V("Avmup"));  
+  WRITELS(cur,"Price",V_CHEAT("ComputePrice",cur),t);
+
+  WRITES(cur,"e",V_CHEAT("ComputeE",c));  
+
   WRITES(cur,"InnType",0);   
    v[21]=RND; v[22]=RND; v[23]=RND;
    v[24]=v[21]+v[22]+v[23];
@@ -326,6 +330,8 @@ if(v[1]==0)
    }
   WRITE("InnType",v[0]);  
   v[10]=V("BidLoan");
+  if(v[10]==0)
+   WRITE("InnType",0);
   END_EQUATION(v[10]);
  }  
 
