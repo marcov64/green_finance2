@@ -195,6 +195,15 @@ v[0]=V("Profit");
 v[1]=VL("Savings",1);
 RESULT(v[1]+v[0] )
 
+EQUATION("AvProfit")
+/*
+Comment
+*/
+
+v[0]=V("Savings");
+v[1]=V("Age");
+RESULT(v[0]/v[1] )
+
 EQUATION("ActionMarket")
 /*
 Pick one firm and let her make her move
@@ -510,7 +519,7 @@ EQUATION("MaxPrice")
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=v[15]=0;
 V("ActionMarket");
 
 
@@ -528,7 +537,7 @@ CYCLE(cur, "Firm")
   v[12]+=VS(cur,"Pb")*v[4];
   v[13]+=VS(cur,"Pg")*v[4];
   v[14]+=VS(cur,"Pe")*v[4];
-
+  v[15]+=VS(cur,"AvProfit")*v[4];
   v[9]+=VS(cur,"markup")*v[4];
   v[10]+=VS(cur,"Price")*v[4]; 
     v[3]=VS(cur,"Price")*v[4];
@@ -547,7 +556,7 @@ WRITE("Ave",v[8]);
 WRITE("AvPb",v[12]);
 WRITE("AvPg",v[13]);
 WRITE("AvPe",v[14]);
-
+WRITE("AvAvProfit",v[15]);
 WRITE("Avmup",v[9]);
 WRITE("AvP",v[10]);
 
