@@ -1,0 +1,850 @@
+	
+Label Root
+{
+	Son: Market
+	Label Market
+	{
+		Son: Demand
+		Label Demand
+		{
+			Son: ConsumerClass
+			Label ConsumerClass
+			{
+				Son: CFirm
+				Label CFirm
+				{
+					Param: msC
+					Param: cfapp
+
+				}
+
+				Param: cg
+				Var: ce
+				Param: cb
+				Param: IdConsumer
+				Param: NumConsumers
+				Param: alpha
+				Param: AvPrice
+				Func: ComputeDemandSize
+				Param: MaxDemand
+				Param: cDemand
+
+			}
+
+
+		}
+
+		Son: Supply
+		Label Supply
+		{
+			Son: Firm
+			Label Firm
+			{
+				Var: ActionFirm
+				Var: e
+				Param: b
+				Param: g
+				Param: IdFirm
+				Param: Sales
+				Param: Lost
+				Var: Clients
+				Var: ms
+				Param: e_inn
+				Param: b_inn
+				Param: g_inn
+				Func: ChooseInnovation
+				Func: Innovate
+				Param: Cost
+				Var: Price
+				Param: markup
+				Var: Savings
+				Var: Profit
+				Param: Pe
+				Param: Pg
+				Param: Pb
+				Param: InnType
+				Var: Age
+				Var: AvProfit
+
+			}
+
+			Param: numFirm
+			Param: ImproveInn
+			Param: CostInn
+			Func: ComputePrice
+			Func: ComputeE
+			Var: MaxPrice
+			Param: MinPrice
+			Param: MaxE
+			Param: SlopeE
+			Param: CenterE
+			Param: minCost
+			Param: maxCost
+			Param: delta_markup
+			Func: ComputeProfits
+			Var: ActionMarket
+			Param: AvCost
+			Param: Avb
+			Param: Avg
+			Param: Ave
+			Param: Avmup
+			Param: AvP
+			Param: AvAge
+			Param: AvPb
+			Param: AvPg
+			Param: AvPe
+			Param: thresholdExit
+			Param: minAgeExit
+			Param: AvAvProfit
+
+		}
+
+		Var: InitMarket
+		Var: PreMarketTime
+		Var: PurchaseTime
+		Param: probPurchase
+		Var: TotClients
+		Param: sClients
+		Param: min
+		Param: max
+		Param: LengthGreen
+		Param: LengthBrown
+		Param: LengthCost
+		Param: ProbLoanGreen
+		Param: ProbLoanBrown
+		Param: ProbLoanCost
+		Param: ProbSuccGreen
+		Param: ProbSuccBrown
+		Param: ProbSuccCost
+		Func: BidLoan
+		Func: IssueID
+		Var: EntryExit
+		Param: probEntry
+		Param: numExit
+		Param: ShareValuesNewEntrants
+
+	}
+
+
+}
+
+
+DATA
+
+Object: Root C	1
+
+Object: Market C	1
+Var: InitMarket 0 n + d n
+Var: PreMarketTime 0 n + d n
+Var: PurchaseTime 0 n + d n
+Param: probPurchase 0 n + n n	0.2
+Var: TotClients 0 s + n n
+Param: sClients 0 n + n n	0
+Param: min 0 n + n n	98
+Param: max 0 n + n n	102
+Param: LengthGreen 0 s + n n	10
+Param: LengthBrown 0 n + n n	10
+Param: LengthCost 0 n + n n	10
+Param: ProbLoanGreen 0 s + n n	0.3
+Param: ProbLoanBrown 0 n + n n	0.5
+Param: ProbLoanCost 0 n + n n	0.5
+Param: ProbSuccGreen 0 n + n n	0.5
+Param: ProbSuccBrown 0 n + n n	0.5
+Param: ProbSuccCost 0 n + n n	0.5
+Func: BidLoan 0 n + n n
+Func: IssueID 1 n + n n	0
+Var: EntryExit 0 n + n n
+Param: probEntry 0 n + n n	0.2
+Param: numExit 0 s + n n	0
+Param: ShareValuesNewEntrants 0 n + n n	0.84
+
+Object: Demand C	1
+
+Object: ConsumerClass C	1
+Param: cg 0 n + n n	0.2
+Var: ce 0 n + n n
+Param: cb 0 n + n n	0.4
+Param: IdConsumer 0 n + n n	0
+Param: NumConsumers 0 s + n n	10000
+Param: alpha 0 n + n n	3
+Param: AvPrice 0 s + n n	0
+Func: ComputeDemandSize 0 n + n n
+Param: MaxDemand 0 n + n n	10000
+Param: cDemand 0 n + n n	0
+
+Object: CFirm C	1
+Param: msC 1 n + n n	0
+Param: cfapp 0 n + n n	0
+
+Object: Supply C	1
+Param: numFirm 0 s + n n	10
+Param: ImproveInn 0 n + n n	1
+Param: CostInn 0 n + n n	0.3
+Func: ComputePrice 0 n + n n
+Func: ComputeE 0 n + n n
+Var: MaxPrice 1 n + n n	160
+Param: MinPrice 0 n + n n	100
+Param: MaxE 0 n + n n	200
+Param: SlopeE 0 n + n n	0.03
+Param: CenterE 0 n + n n	100
+Param: minCost 0 n + n n	50
+Param: maxCost 0 n + n n	50
+Param: delta_markup 0 n + n n	0.01
+Func: ComputeProfits 0 n + n n
+Var: ActionMarket 0 n + d n
+Param: AvCost 0 s + n n	0
+Param: Avb 0 s + n n	0
+Param: Avg 0 s + n n	0
+Param: Ave 0 s + n n	0
+Param: Avmup 0 s + n n	0
+Param: AvP 0 s + n n	0
+Param: AvAge 0 s + n n	0
+Param: AvPb 0 s + n n	0
+Param: AvPg 0 s + n n	0
+Param: AvPe 0 s + n n	0
+Param: thresholdExit 0 n + n n	0.006
+Param: minAgeExit 0 n + n n	10
+Param: AvAvProfit 0 s + n n	0
+
+Object: Firm C	1
+Var: ActionFirm 1 n + n n	0
+Var: e 0 n + n n
+Param: b 0 n + n n	101.382
+Param: g 0 n + n n	101.822
+Param: IdFirm 0 n + n n	1
+Param: Sales 0 n + n n	0
+Param: Lost 0 n + n n	0
+Var: Clients 1 n + n n	0
+Var: ms 1 n + n n	0.01
+Param: e_inn 0 n + n n	0
+Param: b_inn 0 n + n n	0
+Param: g_inn 0 n + n n	0
+Func: ChooseInnovation 0 n + n n
+Func: Innovate 0 n + n n
+Param: Cost 0 n + n n	0
+Var: Price 0 n + n n
+Param: markup 0 n + n n	0.4
+Var: Savings 1 n + n n	0
+Var: Profit 0 n + n n
+Param: Pe 0 n + n n	0
+Param: Pg 0 n + n n	0
+Param: Pb 0 n + n n	0
+Param: InnType 0 n + n n	0
+Var: Age 1 n + n n	0
+Var: AvProfit 0 n + n n
+
+SIM_NUM 1
+SEED 2
+MAX_STEP 10000
+EQUATION /Users/mvSpizzo/LSD/Lsd/Work/green_finance2/fun_green_finance.cpp
+ MODELREPORT report_LowGPrefProbLoanG.html
+
+DESCRIPTION
+
+Object_Root
+(no description available)
+END_DESCRIPTION
+
+Object_Market
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_InitMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PreMarketTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_PurchaseTime
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_probPurchase
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_TotClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_sClients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_min
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_max
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_LengthGreen
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_LengthBrown
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_LengthCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ProbLoanGreen
+(no description available)
+_INIT_
+ All 1 instances equal to 0.3.
+END_DESCRIPTION
+
+Parameter_ProbLoanBrown
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ProbLoanCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ProbSuccGreen
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ProbSuccBrown
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ProbSuccCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_BidLoan
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_IssueID
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_EntryExit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_probEntry
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_numExit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ShareValuesNewEntrants
+(no description available)
+_INIT_
+ All 10 instances set ranging from 0.7 to 0.95 (i.e. increments of 0.0277778).
+END_DESCRIPTION
+
+Object_Demand
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Object_ConsumerClass
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cg
+(no description available)
+_INIT_
+ All 100 instances equal to 0.2.
+END_DESCRIPTION
+
+Variable_ce
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cb
+(no description available)
+_INIT_
+ All 100 instances equal to 0.4.
+END_DESCRIPTION
+
+Parameter_IdConsumer
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_NumConsumers
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_alpha
+(no description available)
+_INIT_
+ All 100 instances equal to 3.
+END_DESCRIPTION
+
+Parameter_AvPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeDemandSize
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MaxDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 10000.
+END_DESCRIPTION
+
+Parameter_cDemand
+(no description available)
+_INIT_
+ All 2 instances equal to 100.
+END_DESCRIPTION
+
+Object_CFirm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_msC
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_cfapp
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Supply
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_numFirm
+(no description available)
+_INIT_
+ All 10 instances equal to 20.
+END_DESCRIPTION
+
+Parameter_ImproveInn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_CostInn
+(no description available)
+_INIT_
+ All 100 instances equal to 0.3.
+END_DESCRIPTION
+
+Function_ComputePrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_MaxPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MinPrice
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_MaxE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_SlopeE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_CenterE
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_minCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_maxCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_delta_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ComputeProfits
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ActionMarket
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvCost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Ave
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Avmup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvP
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvAge
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvPb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvPg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvPe
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_thresholdExit
+(no description available)
+_INIT_
+ All 10 instances equal to 0.006.
+END_DESCRIPTION
+
+Parameter_minAgeExit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvAvProfit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Object_Firm
+(no description available )
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ActionFirm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_e
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_b
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_g
+(no description available)
+_INIT_
+ All 100 instances set to random values drawn from a uniform in the range [98,102].
+END_DESCRIPTION
+
+Parameter_IdFirm
+(no description available)
+_INIT_
+ All 100 instances increasing from 1 with steps 1. The value is increased every 1 instances.
+END_DESCRIPTION
+
+Parameter_Sales
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Lost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Clients
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_ms
+(no description available)
+_INIT_
+ All 100 instances equal to 0.01.
+END_DESCRIPTION
+
+Parameter_e_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_b_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_g_inn
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_ChooseInnovation
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Function_Innovate
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Cost
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Price
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_markup
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Savings
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Profit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Pe
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Pg
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_Pb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_InnType
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_Age
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_AvProfit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+#include "fun_head.h"
+
+MODELBEGIN
+
+
+
+
+
+
+
+
+
+
+
+MODELEND
+
+
+
+
+void close_sim(void)
+{
+
+}
+
+
+
+END_EQ_FILE
