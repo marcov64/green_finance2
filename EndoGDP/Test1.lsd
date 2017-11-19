@@ -25,9 +25,10 @@ Label Root
 				Param: NumConsumers
 				Param: alpha
 				Param: AvPrice
-				Func: ComputeDemandSize
 				Param: MaxDemand
 				Param: cDemand
+				Var: GDPClass
+				Param: ShareGDP
 
 			}
 
@@ -46,8 +47,6 @@ Label Root
 				Param: g
 				Param: IdFirm
 				Param: Sales
-				Param: Lost
-				Var: Clients
 				Var: ms
 				Param: e_inn
 				Param: b_inn
@@ -103,7 +102,6 @@ Label Root
 		Var: PreMarketTime
 		Var: PurchaseTime
 		Param: probPurchase
-		Var: TotClients
 		Param: sClients
 		Param: min
 		Param: max
@@ -125,6 +123,7 @@ Label Root
 		Param: NLoanCost
 		Param: NLoanBrown
 		Param: NLoanGreen
+		Var: GDP
 
 	}
 
@@ -141,7 +140,6 @@ Var: InitMarket 0 n + d n
 Var: PreMarketTime 0 n + d n
 Var: PurchaseTime 0 n + d n
 Param: probPurchase 0 n + n n	0.2
-Var: TotClients 0 s + n n
 Param: sClients 0 n + n n	0
 Param: min 0 n + n n	98
 Param: max 0 n + n n	102
@@ -156,13 +154,14 @@ Param: ProbSuccBrown 0 n + n n	0.5
 Param: ProbSuccCost 0 n + n n	0.5
 Func: BidLoan 0 n + n n
 Func: IssueID 1 n + n n	0
-Var: EntryExit 0 n + n n
+Var: EntryExit 0 n + d n
 Param: probEntry 0 n + n n	0.2
 Param: numExit 0 s + n n	0
 Param: ShareValuesNewEntrants 0 n + n n	0.84
 Param: NLoanCost 0 s + n n	0
 Param: NLoanBrown 0 s + n n	0
 Param: NLoanGreen 0 s + n n	0
+Var: GDP 1 n + n n	10000
 
 Object: Demand C	1
 
@@ -174,9 +173,10 @@ Param: IdConsumer 0 n + n n	0
 Param: NumConsumers 0 s + n n	10000
 Param: alpha 0 n + n n	3
 Param: AvPrice 0 s + n n	0
-Func: ComputeDemandSize 0 n + n n
 Param: MaxDemand 0 n + n n	10000
 Param: cDemand 0 n + n n	0
+Var: GDPClass 1 n + n n	10000
+Param: ShareGDP 0 n + n n	1
 
 Object: CFirm C	1
 Param: msC 1 n + n n	0
@@ -219,8 +219,6 @@ Param: b 0 n + n n	101.382
 Param: g 0 n + n n	101.822
 Param: IdFirm 0 n + n n	1
 Param: Sales 0 s + n n	0
-Param: Lost 0 n + n n	0
-Var: Clients 1 n + n n	0
 Var: ms 1 n + n n	0.01
 Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
@@ -276,12 +274,6 @@ _INIT_
 END_DESCRIPTION
 
 Parameter_probPurchase
-(no description available)
-_INIT_
-
-END_DESCRIPTION
-
-Variable_TotClients
 (no description available)
 _INIT_
 
@@ -413,6 +405,12 @@ _INIT_
 
 END_DESCRIPTION
 
+Variable_GDP
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_Demand
 (no description available )
 _INIT_
@@ -467,12 +465,6 @@ _INIT_
 
 END_DESCRIPTION
 
-Function_ComputeDemandSize
-(no description available)
-_INIT_
-
-END_DESCRIPTION
-
 Parameter_MaxDemand
 (no description available)
 _INIT_
@@ -483,6 +475,18 @@ Parameter_cDemand
 (no description available)
 _INIT_
  All 2 instances equal to 100.
+END_DESCRIPTION
+
+Variable_GDPClass
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_ShareGDP
+(no description available)
+_INIT_
+
 END_DESCRIPTION
 
 Object_CFirm
@@ -714,20 +718,6 @@ _INIT_
 END_DESCRIPTION
 
 Parameter_Sales
-(no description available)
-
-_INIT_
-
-
-END_DESCRIPTION
-
-Parameter_Lost
-(no description available)
-_INIT_
-
-END_DESCRIPTION
-
-Variable_Clients
 (no description available)
 _INIT_
 

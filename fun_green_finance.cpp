@@ -4,6 +4,13 @@ double normT(double m, double s, double min, double max);
 
 MODELBEGIN
 
+EQUATION("GDP")
+/*
+GDP level
+*/
+
+RESULT(10000 )
+
 
 EQUATION("PurchaseTime")
 /*
@@ -35,9 +42,7 @@ CYCLE(cur, "ConsumerClass")
      
    }
   WRITES(cur,"AvPrice",v[30]/v[31]); 
-  v[14]=VS(cur,"ComputeDemandSize");
-  WRITES(cur,"NumConsumers",v[14]);
-  
+  v[14]=VLS(cur,"GDPClass",1);
 
   CYCLES(cur, cur1, "CFirm")
    {
@@ -48,6 +53,14 @@ CYCLE(cur, "ConsumerClass")
    }  
   }
 RESULT(1 )
+
+EQUATION("GDPClass")
+/*
+GDP pertaining to the class
+*/
+v[0]=V("GDP");
+v[1]=V("ShareGDP");
+RESULT(v[0]*v[1] )
 
 
 
@@ -60,7 +73,9 @@ CYCLE(cur, "Firm")
  {
   WRITES(cur,"Sales",0);
  }
-
+WRITE("NLoanCost",0);
+WRITE("NLoanGreen",0);
+WRITE("NLoanBrown",0);
 RESULT(1 )
 
 
@@ -80,43 +95,18 @@ EQUATION("ms")
 /*
 Market shares
 */
-v[0]=V("Clients");
-v[1]=V("TotClients");
+v[0]=V("Sales");
+v[1]=V("GDP");
 RESULT(v[0]/v[1] )
 
-EQUATION("TotClients")
-/*
-Total sales
-*/
-
-v[0]=0;
-CYCLE(cur, "ConsumerClass")
- {
-  v[0]+=VS(cur,"ComputeDemandSize");
- }
-
-RESULT(v[0])
-
-
-EQUATION("ComputeDemandSize")
-/*
-Comment
-*/
-
-v[0]=V("MaxDemand");
-v[1]=V("cDemand");
-v[2]=V("AvPrice");
-v[3]=v[0]-v[1]*v[2];
-if(v[3]<0)
- v[3]=0;
-RESULT(v[3] )
 
 EQUATION("ComputeProfits")
 /*
 Comment
 */
-v[0]=VS(c,"Clients");
+v[4]=VS(c,"Sales");
 v[1]=V_CHEAT("ComputePrice",c);
+v[0]=v[4]/v[1];
 v[2]=VS(c,"Cost");
 //v[22]=V("FinancialCosts");
 v[3]=v[0]*(v[1]-v[2]);
@@ -245,11 +235,21 @@ if(v[0]==3)
 if(RND>v[1])
  END_EQUATION(0);
 if(v[0]==1)
+ {
  v[3]=V("LengthCost");
+ INCR("NLoanCost",1);
+ }
 if(v[0]==2)
+ {
  v[3]=V("LengthBrown");
+ INCR("NLoanBrown",1);
+ }
+
 if(v[0]==3)
+ {
  v[3]=V("LengthGreen");
+ INCR("NLoanGreen",1);
+ }
    
 
 RESULT(v[3] )
@@ -284,6 +284,7 @@ if(v[1]==0)
   v[10]=V("BidLoan");
   if(v[10]==0)
    WRITE("InnType",0);
+  
   END_EQUATION(v[10]);
  }  
 
@@ -458,16 +459,6 @@ v[3]=VS(cur,"PeriodsLoansG");
 v[4]=v[0]*pow((1+v[2]/v[3]),(v[3]*v[1])*(v[2]/v[3])/((1+v[2]/v[3])*(v[3]*v[1] - 1)));
 RESULT(v[4] )
 
-EQUATION("ApplyLoanG")
-/*
-Comment
-*/
-
-v[0]=V("ComputeRataG");
-v[1]=VS(c,"Profit");
-
-
-RESULT(-1 )
 
 
 
@@ -497,22 +488,23 @@ Initialization of the market.
 */
 
 
-v[4]=V("TotClients");
+v[4]=V("GDP");
 v[5]=V("numFirm");
 v[6]=v[4]/v[5];
-cur=SEARCH("Supply");
-ADDNOBJS(cur,"Firm",v[5]-1);
+cur1=SEARCH("Supply");
+ADDNOBJS(cur1,"Firm",v[5]-1);
 v[7]=1;
 v[8]=V("min");
 v[9]=V("max");
 v[18]=V("minCost");
 v[19]=V("maxCost");
+v[30]=0;
 CYCLE(cur, "Firm")
   {
    v[7]=V("IssueID");
    WRITES(cur,"IdFirm",v[7]);
-   WRITELS(cur,"Clients",v[6], t-1);
-   WRITES(cur,"Cost",UNIFORM(v[18],v[19]));
+   WRITES(cur,"Cost",v[31]=UNIFORM(v[18],v[19]));
+   v[31]+=v[30];
    v[21]=V_CHEAT("ComputePrice",cur);
    WRITELS(cur,"Price",v[21], t);
    v[20]=V_CHEAT("ComputeE",cur);
@@ -526,6 +518,8 @@ CYCLE(cur, "Firm")
    WRITES(cur,"Pb",v[23]/v[24]);   
    WRITELS(cur,"ms",1/v[5], t-1);
   }
+WRITES(cur1,"AvCost",v[31]/v[5]);
+  
 cur1=SEARCH("Demand");
 v[2]=1;
 CYCLES(cur1, cur, "ConsumerClass")
