@@ -4,11 +4,17 @@ double normT(double m, double s, double min, double max);
 
 MODELBEGIN
 
-EQUATION("GDP")
+EQUATION("TargetGDP")
 /*
 GDP level
 */
-
+V("ActionMarket");
+v[0]=V("plusGDP");
+v[1]=V("minusGDP");
+v[2]=V("NLoanGreen");
+v[3]=V("NLoanBrown");
+v[4]=V("NLoanCost");
+v[5]=VL("Targett",1);
 RESULT(10000 )
 
 
@@ -78,18 +84,6 @@ WRITE("NLoanGreen",0);
 WRITE("NLoanBrown",0);
 RESULT(1 )
 
-
-EQUATION("Clients")
-/*
-Number of consumers currently owning the product of the firm. All the job is done in IdUsed, so the equation simply add new costomers and subtract lost ones. The only requirement is that the computation is done after PurchaseTime is computed.
-*/
-V("PurchaseTime");
-v[0]=VL("Clients",1);
-v[1]=V("Sales");
-
-v[3]=V("sClients");
-v[2]=v[0]*v[3]+v[1]*(1-v[3]);
-RESULT(v[2] )
 
 EQUATION("ms")
 /*
@@ -189,9 +183,9 @@ if(RND<v[0])
   v[7]=V("IssueID");
   cur=ADDOBJS(cur1,"Firm");
   WRITES(cur,"IdFirm",v[7]);  
-  WRITES(cur,"b",V("Avb")*v[21]);   
-  WRITES(cur,"g",V("Avg")*v[21]);    
-  WRITES(cur,"Cost",V("AvCost")*v[21]);
+  WRITES(cur,"b",V("ImitB"));   
+  WRITES(cur,"g",V("ImitG"));    
+  WRITES(cur,"Cost",V("ImitCost"));
   WRITES(cur,"markup",V("Avmup"));  
   WRITELS(cur,"Price",V_CHEAT("ComputePrice",cur),t);
 
@@ -237,18 +231,18 @@ if(RND>v[1])
 if(v[0]==1)
  {
  v[3]=V("LengthCost");
- INCR("NLoanCost",1);
+ INCR("NLoanCost",VLS(c,"ms",1)*VL("GDP",1));
  }
 if(v[0]==2)
  {
  v[3]=V("LengthBrown");
- INCR("NLoanBrown",1);
+ INCR("NLoanBrown",VLS(c,"ms",1)*VL("GDP",1));
  }
 
 if(v[0]==3)
  {
  v[3]=V("LengthGreen");
- INCR("NLoanGreen",1);
+ INCR("NLoanGreen",VLS(c,"ms",1)*VL("GDP",1));
  }
    
 
@@ -368,12 +362,43 @@ v[1]=VS(c,"markup");
 v[2]=v[0]*(1+v[1]);
 RESULT(v[2] )
 
+EQUATION("ImitCost")
+/*
+Value of e for new entrants
+*/
+v[0]=V("Topcost")*.84;
+v[1]=V("speedImit");
+v[2]=VL("ImitCost",1);
+v[3]=v[1]*v[2]+(1-v[1])*v[0];
+RESULT(v[3] )
+
+EQUATION("ImitG")
+/*
+Value of g for new entrants
+*/
+v[0]=V("Topg")*.84;
+v[1]=V("speedImit");
+v[2]=VL("ImitG",1);
+v[3]=v[1]*v[2]+(1-v[1])*v[0];
+RESULT(v[3] )
+
+EQUATION("ImitB")
+/*
+Value of b for new entrants
+*/
+v[0]=V("Topb")*.84;
+v[1]=V("speedImit");
+v[2]=VL("ImitB",1);
+v[3]=v[1]*v[2]+(1-v[1])*v[0];
+RESULT(v[3] )
+
 EQUATION("MaxPrice")
 /*
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=v[15]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=v[15]=v[16]=v[17]=0;
+v[18]=1000000000;
 V("ActionMarket");
 
 
@@ -385,8 +410,17 @@ CYCLE(cur, "Firm")
   v[4]=VS(cur,"ms");
   v[11]+=VS(cur,"Age")*v[4];
   v[5]+=VS(cur,"Cost")*v[4];
-  v[6]+=VS(cur,"b")*v[4];
-  v[7]+=VS(cur,"g")*v[4];
+  v[30]=VS(cur,"b");
+  v[6]+=v[30]*v[4];
+  if(v[16]<v[30])
+   v[16]=v[30];
+  v[31]=VS(cur,"g");
+  v[7]+=v[31]*v[4];
+  if(v[17]<v[31])
+   v[17]=v[31];
+  v[32]=VS(cur,"Cost");
+  if(v[18]>v[32])
+   v[18]=v[32]; 
   v[8]+=VS(cur,"e")*v[4];
   v[12]+=VS(cur,"Pb")*v[4];
   v[13]+=VS(cur,"Pg")*v[4];
@@ -394,12 +428,12 @@ CYCLE(cur, "Firm")
   v[15]+=VS(cur,"AvProfit")*v[4];
   v[9]+=VS(cur,"markup")*v[4];
   v[10]+=VS(cur,"Price")*v[4]; 
-    v[3]=VS(cur,"Price")*v[4];
-    if(v[3]>v[1])
-     v[1]=v[3];
-    if(v[3]<v[2])
-     v[2]=v[3]; 
- }
+  v[3]=VS(cur,"Price")*v[4];
+  if(v[3]>v[1])
+   v[1]=v[3];
+  if(v[3]<v[2])
+   v[2]=v[3]; 
+  }
 
 WRITE("AvAge",v[11]);
 WRITE("MinPrice",v[2]);
@@ -413,6 +447,9 @@ WRITE("AvPe",v[14]);
 WRITE("AvAvProfit",v[15]);
 WRITE("Avmup",v[9]);
 WRITE("AvP",v[10]);
+WRITE("Topg",v[17]);
+WRITE("Topb",v[16]);
+WRITE("Topcost",v[18]);
 
 RESULT(v[1] )
 
@@ -498,19 +535,21 @@ v[8]=V("min");
 v[9]=V("max");
 v[18]=V("minCost");
 v[19]=V("maxCost");
-v[30]=0;
+v[30]=v[32]=v[34]=0;
 CYCLE(cur, "Firm")
   {
    v[7]=V("IssueID");
    WRITES(cur,"IdFirm",v[7]);
    WRITES(cur,"Cost",v[31]=UNIFORM(v[18],v[19]));
-   v[31]+=v[30];
+   v[30]+=v[31];
    v[21]=V_CHEAT("ComputePrice",cur);
    WRITELS(cur,"Price",v[21], t);
    v[20]=V_CHEAT("ComputeE",cur);
    WRITELS(cur,"e",v[20], t);   
-   WRITES(cur,"g",UNIFORM(v[8],v[9]));
-   WRITES(cur,"b",UNIFORM(v[8],v[9]));
+   WRITES(cur,"g",v[31]=UNIFORM(v[8],v[9]));
+   v[32]+=v[31];
+   WRITES(cur,"b",v[31]=UNIFORM(v[8],v[9]));
+   v[34]+=v[31];
    v[21]=RND; v[22]=RND; v[23]=RND;
    v[24]=v[21]+v[22]+v[23];
    WRITES(cur,"Pe",v[21]/v[24]);
@@ -518,8 +557,11 @@ CYCLE(cur, "Firm")
    WRITES(cur,"Pb",v[23]/v[24]);   
    WRITELS(cur,"ms",1/v[5], t-1);
   }
-WRITES(cur1,"AvCost",v[31]/v[5]);
-  
+WRITES(cur1,"AvCost",v[30]/v[5]);
+WRITELS(cur1,"ImitCost",v[30]/v[5], t);
+WRITELS(cur1,"ImitG",v[32]/v[5], t);
+WRITELS(cur1,"ImitB",v[34]/v[5], t);
+
 cur1=SEARCH("Demand");
 v[2]=1;
 CYCLES(cur1, cur, "ConsumerClass")
