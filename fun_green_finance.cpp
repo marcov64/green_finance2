@@ -6,7 +6,7 @@ MODELBEGIN
 
 EQUATION("TargetGDP")
 /*
-GDP level
+Target GDP
 */
 V("ActionMarket");
 v[0]=V("plusGDP");
@@ -14,8 +14,26 @@ v[1]=V("minusGDP");
 v[2]=V("NLoanGreen");
 v[3]=V("NLoanBrown");
 v[4]=V("NLoanCost");
-v[5]=VL("Targett",1);
-RESULT(10000 )
+v[5]=VL("GDP",1);
+//v[9]=V("zeroInvGDP");
+
+v[6]=(v[2]+v[3]-v[4])/v[5]; //percentage accelerator, in the range [-1;+1]
+v[7]=v[1]+(v[0]-v[1])*(v[6]+1)/2; //proportional shifting in the range [minus;plus]
+
+//v[8]=(v[0]-v[1])*(v[7]) + v[1]; //bounded accellerator
+v[9]=v[5]*v[7];
+RESULT(v[9] )
+
+EQUATION("GDP")
+/*
+Actual GDP
+*/
+v[0]=VL("GDP",1);
+v[1]=V("TargetGDP");
+v[2]=V("aGDP");
+
+v[3]=v[0]*v[2]+(1-v[2])*v[1];
+RESULT(v[3] )
 
 
 EQUATION("PurchaseTime")
