@@ -194,7 +194,7 @@ Var: GDPClass 1 n + n n	10000
 Param: ShareGDP 0 n + n n	1
 
 Object: CFirm C	1
-Param: msC 1 n + n n	0
+Param: msC 1 s + n n	0
 Param: cfapp 0 n + n n	0
 
 Object: Supply C	1
@@ -232,22 +232,22 @@ Param: Topcost 0 s + n n	0
 Var: ImitB 1 s + n n	0
 Var: ImitG 1 s + n n	0
 Var: ImitCost 1 s + n n	0
-Param: speedImit 0 n + n n	0.95
+Param: speedImit 0 n + n n	0.99
 
 Object: Firm C	1
 Var: ActionFirm 1 n + n n	0
 Var: e 0 n + n n
-Param: b 0 n + n n	101.382
-Param: g 0 n + n n	101.822
+Param: b 0 s + n n	101.382
+Param: g 0 s + n n	101.822
 Param: IdFirm 0 n + n n	1
 Param: Sales 0 n + n n	0
-Var: ms 1 n + n n	0.01
+Var: ms 1 s + n n	0.01
 Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
 Param: g_inn 0 n + n n	0
 Func: ChooseInnovation 0 n + n n
 Func: Innovate 0 n + n n
-Param: Cost 0 n + n n	0
+Param: Cost 0 s + n n	0
 Var: Price 0 n + n n
 Param: markup 0 n + n n	0.4
 Var: Savings 1 n + n n	0

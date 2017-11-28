@@ -384,7 +384,8 @@ EQUATION("ImitCost")
 /*
 Value of e for new entrants
 */
-v[0]=V("Topcost")*.84;
+v[0]=V("Topcost")*1/.84;
+//v[0]=V("Topcost");
 v[1]=V("speedImit");
 v[2]=VL("ImitCost",1);
 v[3]=v[1]*v[2]+(1-v[1])*v[0];
@@ -395,6 +396,7 @@ EQUATION("ImitG")
 Value of g for new entrants
 */
 v[0]=V("Topg")*.84;
+//v[0]=V("Topg");
 v[1]=V("speedImit");
 v[2]=VL("ImitG",1);
 v[3]=v[1]*v[2]+(1-v[1])*v[0];
@@ -405,6 +407,7 @@ EQUATION("ImitB")
 Value of b for new entrants
 */
 v[0]=V("Topb")*.84;
+//v[0]=V("Topb");
 v[1]=V("speedImit");
 v[2]=VL("ImitB",1);
 v[3]=v[1]*v[2]+(1-v[1])*v[0];
