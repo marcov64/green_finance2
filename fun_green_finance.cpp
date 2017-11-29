@@ -4,6 +4,7 @@ double normT(double m, double s, double min, double max);
 
 MODELBEGIN
 
+
 EQUATION("TargetGDP")
 /*
 Target GDP
@@ -17,12 +18,23 @@ v[4]=V("NLoanCost");
 v[5]=VL("GDP",1);
 //v[9]=V("zeroInvGDP");
 
-v[6]=(v[2]+v[3]-v[4])/v[5]; //percentage accelerator, in the range [-1;+1]
-v[7]=v[1]+(v[0]-v[1])*(v[6]+1)/2; //proportional shifting in the range [minus;plus]
 
-//v[8]=(v[0]-v[1])*(v[7]) + v[1]; //bounded accellerator
-v[9]=v[5]*v[7];
+v[16]=(v[2])/v[5]; //percentage accelerator, in the range [-1;+1]
+v[17]=v[1]+(v[0]-v[1])*(v[16]+1)/2; //proportional shifting in the range [minus;plus]
+v[18]=V("wGDPg");
+
+v[26]=(v[3])/v[5]; //percentage accelerator, in the range [-1;+1]
+v[27]=v[1]+(v[0]-v[1])*(v[26]+1)/2; //proportional shifting in the range [minus;plus]
+v[28]=V("wGDPb");
+
+v[36]=(v[4])/v[5]; //percentage accelerator, in the range [-1;+1]
+v[37]=v[1]+(v[0]-v[1])*(v[36]+1)/2; //proportional shifting in the range [minus;plus]
+v[38]=V("wGDPc");
+
+v[6]=v[18]*v[17]+v[28]*v[27]+v[38]/v[37]; //cumulated effect
+v[9]=v[5]*v[6];
 RESULT(v[9] )
+
 
 EQUATION("GDP")
 /*
@@ -50,6 +62,21 @@ CYCLE(cur, "ConsumerClass")
   v[1]=VS(cur,"cb");
   v[2]=VS(cur,"cg");
   v[5]=VS(cur,"alpha");
+  v[7]=-1;
+ /*   CYCLES(cur, cur1, "CFirm")
+   {//compute the minimum to translate the levels of all firms, so as to assign 0.01 prob to the worst one
+     v[10]=VS(cur1->hook,"e");
+     v[11]=VS(cur1->hook,"b"); 
+     v[12]=VS(cur1->hook,"g"); 
+//     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
+     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2];
+     if(v[7]==-1)
+      v[7]=v[13];
+     if(v[7]>v[13])
+      v[7]=v[13];
+   }
+*/
+v[7]=0;  
   v[3]=0;
   CYCLES(cur, cur1, "CFirm")
    {
@@ -57,7 +84,7 @@ CYCLE(cur, "ConsumerClass")
      v[11]=VS(cur1->hook,"b"); 
      v[12]=VS(cur1->hook,"g"); 
 //     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
-     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2];
+     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2]-v[7];
      v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
@@ -120,9 +147,22 @@ v[4]=VS(c,"Sales");
 v[1]=V_CHEAT("ComputePrice",c);
 v[0]=v[4]/v[1];
 v[2]=VS(c,"Cost");
+v[4]=VLS(c,"FixedCosts",1);
 //v[22]=V("FinancialCosts");
-v[3]=v[0]*(v[1]-v[2]);
+v[3]=v[0]*(v[1]-v[2])-v[4];
 RESULT(v[3] )
+
+EQUATION("FixedCosts")
+/*
+Fixed costs of production, trailing the long-term path of revenues
+*/
+v[0]=V("Sales");
+v[1]=VL("FixedCosts",1);
+v[2]=V("aFC");
+v[3]=V("shareFC");
+
+v[4]=v[1]*v[2]+(1-v[2])*v[0]*v[3];
+RESULT(v[4] )
 
 EQUATION("Profit")
 /*
@@ -138,7 +178,8 @@ Cumulated cash from profits minus expenditures
 
 v[0]=V("Profit");
 v[1]=VL("Savings",1);
-RESULT(v[1]+v[0] )
+v[2]=V("shareDividends");
+RESULT(v[1]*(1-v[2])+v[0] )
 
 EQUATION("AvProfit")
 /*
@@ -176,8 +217,8 @@ CYCLE_SAFES(cur1, cur, "Firm")
   v[0]=VS(cur,"ActionFirm");
   if(v[0]==0)
    {
-    v[1]=VS(cur,"ms");
-    if(v[1]<v[30] && VS(cur,"Age")>v[31])
+    v[1]=VS(cur,"Savings");
+    if(v[1]<0 && VS(cur,"Age")>v[31])
      {
       CYCLE(cur3, "ConsumerClass")
        {
