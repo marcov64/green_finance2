@@ -64,6 +64,7 @@ Label Root
 				Param: InnType
 				Var: Age
 				Var: AvProfit
+				Var: FixedCosts
 
 			}
 
@@ -102,6 +103,10 @@ Label Root
 			Var: ImitG
 			Var: ImitCost
 			Param: speedImit
+			Param: shareDividends
+			Param: aFC
+			Param: shareFC
+			Param: minFC
 
 		}
 
@@ -239,6 +244,10 @@ Var: ImitB 1 s + n n	0
 Var: ImitG 1 s + n n	0
 Var: ImitCost 1 s + n n	0
 Param: speedImit 0 n + n n	0.99
+Param: shareDividends 0 n + n n	0.3
+Param: aFC 0 n + n n	0.9
+Param: shareFC 0 n + n n	0.2
+Param: minFC 0 n + n n	5
 
 Object: Firm C	1
 Var: ActionFirm 1 n + n n	0
@@ -256,7 +265,7 @@ Func: Innovate 0 n + n n
 Param: Cost 0 s + n n	0
 Var: Price 0 n + n n
 Param: markup 0 n + n n	0.4
-Var: Savings 1 n + n n	0
+Var: Savings 1 n + n n	200
 Var: Profit 0 n + n n
 Param: Pe 0 n + n n	0
 Param: Pg 0 n + n n	0
@@ -264,6 +273,7 @@ Param: Pb 0 n + n n	0
 Param: InnType 0 n + n n	0
 Var: Age 1 n + n n	0
 Var: AvProfit 0 n + n n
+Var: FixedCosts 1 s + n n	0
 
 SIM_NUM 1
 SEED 2
@@ -793,6 +803,28 @@ _INIT_
 
 END_DESCRIPTION
 
+Parameter_shareDividends
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_aFC
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_shareFC
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_minFC
+(no description available)
+END_DESCRIPTION
+
 Object_Firm
 (no description available )
 _INIT_
@@ -892,7 +924,7 @@ END_DESCRIPTION
 Variable_Savings
 (no description available)
 _INIT_
-
+ All 1 instances equal to 200.
 END_DESCRIPTION
 
 Variable_Profit
@@ -932,6 +964,12 @@ _INIT_
 END_DESCRIPTION
 
 Variable_AvProfit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_FixedCosts
 (no description available)
 _INIT_
 
