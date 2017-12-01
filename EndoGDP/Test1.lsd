@@ -185,9 +185,9 @@ Param: plusGDP 0 n + n n	1.1
 Param: minusGDP 0 n + n n	0.9
 Param: aGDP 0 n + n n	0.99
 Var: TargetGDP 1 s + d n	10000
-Param: wGDPg 0 n + n n	0.2
-Param: wGDPb 0 n + n n	0.4
-Param: wGDPc 0 n + n n	0.4
+Param: wGDPg 0 n + n n	0.25
+Param: wGDPb 0 n + n n	0.25
+Param: wGDPc 0 n + n n	0.5
 
 Object: Demand C	1
 
@@ -255,7 +255,7 @@ Var: e 0 n + n n
 Param: b 0 s + n n	101.382
 Param: g 0 s + n n	101.822
 Param: IdFirm 0 n + n n	1
-Param: Sales 0 n + n n	0
+Param: Sales 0 s + n n	0
 Var: ms 1 s + n n	0.01
 Param: e_inn 0 n + n n	0
 Param: b_inn 0 n + n n	0
@@ -265,7 +265,7 @@ Func: Innovate 0 n + n n
 Param: Cost 0 s + n n	0
 Var: Price 0 n + n n
 Param: markup 0 n + n n	0.4
-Var: Savings 1 n + n n	200
+Var: Savings 1 s + n n	200
 Var: Profit 0 n + n n
 Param: Pe 0 n + n n	0
 Param: Pg 0 n + n n	0
@@ -276,7 +276,7 @@ Var: AvProfit 0 n + n n
 Var: FixedCosts 1 s + n n	0
 
 SIM_NUM 1
-SEED 2
+SEED 1
 MAX_STEP 10000
 EQUATION /Users/MarcoMicroMac/repoGH/Lsd/Work/green_finance2GH/fun_green_finance.cpp
  MODELREPORT report_Test1.html
@@ -823,6 +823,8 @@ END_DESCRIPTION
 
 Parameter_minFC
 (no description available)
+_INIT_
+
 END_DESCRIPTION
 
 Object_Firm

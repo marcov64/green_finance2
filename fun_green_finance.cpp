@@ -207,6 +207,7 @@ EQUATION("EntryExit")
 /*
 Comment
 */V("ActionMarket");
+V("MaxPrice");
 
 v[3]=v[4]=v[5]=0;
 cur1=SEARCH("Supply");
