@@ -147,9 +147,9 @@ v[4]=VS(c,"Sales");
 v[1]=V_CHEAT("ComputePrice",c);
 v[0]=v[4]/v[1];
 v[2]=VS(c,"Cost");
-v[4]=VLS(c,"FixedCosts",1);
+v[5]=VLS(c,"FixedCosts",1);
 //v[22]=V("FinancialCosts");
-v[3]=v[0]*(v[1]-v[2])-v[4];
+v[3]=v[4]*(v[1]-v[2])-v[5];
 RESULT(v[3] )
 
 EQUATION("FixedCosts")
@@ -213,7 +213,7 @@ v[3]=v[4]=v[5]=0;
 cur1=SEARCH("Supply");
 v[30]=V("thresholdExit");
 v[31]=V("minAgeExit");
-
+v[61]=V("aEntryImit");
 CYCLE_SAFES(cur1, cur, "Firm")
  {
   v[0]=VS(cur,"ActionFirm");
@@ -233,6 +233,11 @@ CYCLE_SAFES(cur1, cur, "Firm")
       DELETE(cur);
       v[3]++;
      } 
+    else
+     {
+      v[60]=VS(cur,"ms");
+      WRITES(cur,"fapp",pow(v[60],v[61]));            
+     } 
    }
  }
 
@@ -242,15 +247,22 @@ if(RND<v[0])
  {v[4]=1;
  v[21]=V("ShareValuesNewEntrants");
   v[7]=V("IssueID");
-  cur=ADDOBJS(cur1,"Firm");
+  cur4=RNDDRAWS(cur1,"Firm","fapp");
+  cur=ADDOBJS_EX(cur1,"Firm",cur4);
+//  cur=ADDOBJS(cur1,"Firm");
   WRITES(cur,"IdFirm",v[7]);  
-  WRITES(cur,"b",V("ImitB"));   
-  WRITES(cur,"g",V("ImitG"));    
-  WRITES(cur,"Cost",V("ImitCost"));
+//  WRITES(cur,"b",V("ImitB"));   
+//  WRITES(cur,"g",V("ImitG"));    
+//  WRITES(cur,"Cost",V("ImitCost"));
+  WRITES(cur,"Age",0);
+  v[22]=RND;
+  WRITES(cur,"b",v[21]*(1-v[22])+v[22]*VS(cur,"b"));
+  WRITES(cur,"g",v[21]*(1-v[22])+v[22]*VS(cur,"g"));        
+  WRITES(cur,"Cost",v[21]*(1-v[22])+v[22]*VS(cur,"Cost"));
   WRITES(cur,"markup",V("Avmup"));  
   WRITELS(cur,"Price",V_CHEAT("ComputePrice",cur),t);
 
-  WRITES(cur,"e",V_CHEAT("ComputeE",c));  
+  WRITES(cur,"e",V_CHEAT("ComputeE",cur));  
 
   WRITES(cur,"InnType",0);   
    v[21]=RND; v[22]=RND; v[23]=RND;
@@ -427,7 +439,8 @@ EQUATION("ImitCost")
 /*
 Value of e for new entrants
 */
-v[0]=V("Topcost")*1/.84;
+v[4]=V("ShareValuesNewEntrants");
+v[0]=V("Topcost")*1/v[4];
 //v[0]=V("Topcost");
 v[1]=V("speedImit");
 v[2]=VL("ImitCost",1);
@@ -438,7 +451,8 @@ EQUATION("ImitG")
 /*
 Value of g for new entrants
 */
-v[0]=V("Topg")*.84;
+v[4]=V("ShareValuesNewEntrants");
+v[0]=V("Topg")*v[4];
 //v[0]=V("Topg");
 v[1]=V("speedImit");
 v[2]=VL("ImitG",1);
@@ -449,7 +463,8 @@ EQUATION("ImitB")
 /*
 Value of b for new entrants
 */
-v[0]=V("Topb")*.84;
+v[4]=V("ShareValuesNewEntrants");
+v[0]=V("Topb")*v[4];
 //v[0]=V("Topb");
 v[1]=V("speedImit");
 v[2]=VL("ImitB",1);
@@ -461,7 +476,7 @@ EQUATION("MaxPrice")
 Comment
 */
 V("PurchaseTime");
-v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=v[15]=v[16]=v[17]=0;
+v[0]=v[1]=v[2]=v[5]=v[6]=v[7]=v[8]=v[9]=v[10]=v[11]=v[12]=v[13]=v[14]=v[15]=v[16]=v[17]=v[21]=0;
 v[18]=1000000000;
 V("ActionMarket");
 
@@ -491,7 +506,8 @@ CYCLE(cur, "Firm")
   v[14]+=VS(cur,"Pe")*v[4];
   v[15]+=VS(cur,"AvProfit")*v[4];
   v[9]+=VS(cur,"markup")*v[4];
-  v[10]+=VS(cur,"Price")*v[4]; 
+  v[10]+=VS(cur,"Price")*v[4];
+  v[21]+=VS(cur,"Savings")*v[4];   
   v[3]=VS(cur,"Price")*v[4];
   if(v[3]>v[1])
    v[1]=v[3];
@@ -514,7 +530,7 @@ WRITE("AvP",v[10]);
 WRITE("Topg",v[17]);
 WRITE("Topb",v[16]);
 WRITE("Topcost",v[18]);
-
+WRITE("AvSavings",v[21]);
 RESULT(v[1] )
 
 EQUATION("Price")

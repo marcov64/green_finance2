@@ -65,6 +65,7 @@ Label Root
 				Var: Age
 				Var: AvProfit
 				Var: FixedCosts
+				Param: fapp
 
 			}
 
@@ -107,6 +108,8 @@ Label Root
 			Param: aFC
 			Param: shareFC
 			Param: minFC
+			Param: aEntryImit
+			Param: AvSavings
 
 		}
 
@@ -165,18 +168,18 @@ Param: max 0 n + n n	102
 Param: LengthGreen 0 s + n n	10
 Param: LengthBrown 0 n + n n	10
 Param: LengthCost 0 n + n n	10
-Param: ProbLoanGreen 0 s + n n	0.2
-Param: ProbLoanBrown 0 n + n n	0.2
+Param: ProbLoanGreen 0 s + n n	0.5
+Param: ProbLoanBrown 0 n + n n	0.5
 Param: ProbLoanCost 0 n + n n	0.5
-Param: ProbSuccGreen 0 n + n n	0.5
-Param: ProbSuccBrown 0 n + n n	0.5
-Param: ProbSuccCost 0 n + n n	0.5
+Param: ProbSuccGreen 0 n + n n	1
+Param: ProbSuccBrown 0 n + n n	1
+Param: ProbSuccCost 0 n + n n	1
 Func: BidLoan 0 n + n n
 Func: IssueID 1 n + n n	0
 Var: EntryExit 0 n + d n
 Param: probEntry 0 n + n n	0.2
 Param: numExit 0 s + n n	0
-Param: ShareValuesNewEntrants 0 n + n n	0.84
+Param: ShareValuesNewEntrants 0 n + n n	0.95
 Param: NLoanCost 0 s + n n	0
 Param: NLoanBrown 0 s + n n	0
 Param: NLoanGreen 0 s + n n	0
@@ -192,9 +195,9 @@ Param: wGDPc 0 n + n n	0.5
 Object: Demand C	1
 
 Object: ConsumerClass C	1
-Param: cg 0 n + n n	0.2
+Param: cg 0 n + n n	0.333
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.4
+Param: cb 0 n + n n	0.333
 Param: IdConsumer 0 n + n n	0
 Param: NumConsumers 0 s + n n	10000
 Param: alpha 0 n + n n	20
@@ -214,7 +217,7 @@ Param: ImproveInn 0 n + n n	1
 Param: CostInn 0 n + n n	0.4
 Func: ComputePrice 0 n + n n
 Func: ComputeE 0 n + n n
-Var: MaxPrice 1 n + n n	160
+Var: MaxPrice 1 n + d n	160
 Param: MinPrice 0 n + n n	100
 Param: MaxE 0 n + n n	200
 Param: SlopeE 0 n + n n	0.03
@@ -248,6 +251,8 @@ Param: shareDividends 0 n + n n	0.3
 Param: aFC 0 n + n n	0.9
 Param: shareFC 0 n + n n	0.2
 Param: minFC 0 n + n n	5
+Param: aEntryImit 0 n + n n	0
+Param: AvSavings 0 s + n n	0
 
 Object: Firm C	1
 Var: ActionFirm 1 n + n n	0
@@ -274,10 +279,11 @@ Param: InnType 0 n + n n	0
 Var: Age 1 s + n n	0
 Var: AvProfit 0 n + n n
 Var: FixedCosts 1 s + n n	0
+Param: fapp 0 n + n n	0
 
 SIM_NUM 1
-SEED 1
-MAX_STEP 10000
+SEED 2
+MAX_STEP 30000
 EQUATION /Users/MarcoMicroMac/repoGH/Lsd/Work/green_finance2GH/fun_green_finance.cpp
  MODELREPORT report_Test1.html
 
@@ -827,6 +833,18 @@ _INIT_
 
 END_DESCRIPTION
 
+Parameter_aEntryImit
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_AvSavings
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_Firm
 (no description available )
 _INIT_
@@ -961,9 +979,7 @@ END_DESCRIPTION
 
 Variable_Age
 (no description available)
-
 _INIT_
-
 
 END_DESCRIPTION
 
@@ -974,6 +990,12 @@ _INIT_
 END_DESCRIPTION
 
 Variable_FixedCosts
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_fapp
 (no description available)
 _INIT_
 
