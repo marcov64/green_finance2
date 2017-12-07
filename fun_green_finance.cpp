@@ -221,7 +221,8 @@ CYCLE_SAFES(cur1, cur, "Firm")
   if(v[0]==0)
    {
     v[1]=VS(cur,"Savings");
-    if(v[1]<0 && VS(cur,"Age")>v[31])
+    v[2]=VS(cur,"ms");
+    if(v[1]<0 && v[2]<v[30] && VS(cur,"Age")>v[31])
      {
       CYCLE(cur3, "ConsumerClass")
        {
