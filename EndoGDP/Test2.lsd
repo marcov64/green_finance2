@@ -195,9 +195,9 @@ Param: wGDPc 0 n + n n	0.5
 Object: Demand C	1
 
 Object: ConsumerClass C	1
-Param: cg 0 n + n n	0.333
+Param: cg 0 n + n n	0.2
 Var: ce 0 n + n n
-Param: cb 0 n + n n	0.333
+Param: cb 0 n + n n	0.2
 Param: IdConsumer 0 n + n n	0
 Param: NumConsumers 0 s + n n	10000
 Param: alpha 0 n + n n	20
@@ -214,7 +214,7 @@ Param: cfapp 0 n + n n	0
 Object: Supply C	1
 Param: numFirm 0 s + n n	10
 Param: ImproveInn 0 n + n n	1
-Param: CostInn 0 n + n n	0.4
+Param: CostInn 0 n + n n	0.2
 Func: ComputePrice 0 n + n n
 Func: ComputeE 0 n + n n
 Var: MaxPrice 1 n + d n	160
@@ -285,7 +285,7 @@ SIM_NUM 1
 SEED 2
 MAX_STEP 30000
 EQUATION /Users/MarcoMicroMac/repoGH/Lsd/Work/green_finance2GH/fun_green_finance.cpp
- MODELREPORT report_Test1.html
+ MODELREPORT report_Test2.html
 
 DESCRIPTION
 

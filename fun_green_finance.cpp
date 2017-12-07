@@ -161,8 +161,9 @@ v[1]=VL("FixedCosts",1);
 v[2]=V("aFC");
 v[3]=V("shareFC");
 v[5]=V("minFC");
-
-v[4]=max(v[1]*v[2]+(1-v[2])*v[0]*v[3],v[5]);
+v[7]=V("Price");
+v[6]=v[1]*v[2]+(1-v[2])*v[0]*v[3]*v[7];
+v[4]=max(v[6],v[5]);
 RESULT(v[4] )
 
 EQUATION("Profit")
