@@ -63,28 +63,15 @@ CYCLE(cur, "ConsumerClass")
   v[2]=VS(cur,"cg");
   v[5]=VS(cur,"alpha");
   v[7]=-1;
- /*   CYCLES(cur, cur1, "CFirm")
-   {//compute the minimum to translate the levels of all firms, so as to assign 0.01 prob to the worst one
-     v[10]=VS(cur1->hook,"e");
-     v[11]=VS(cur1->hook,"b"); 
-     v[12]=VS(cur1->hook,"g"); 
-//     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
-     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2];
-     if(v[7]==-1)
-      v[7]=v[13];
-     if(v[7]>v[13])
-      v[7]=v[13];
-   }
-*/
-v[7]=0;  
+  v[7]=0;  
   v[3]=0;
   CYCLES(cur, cur1, "CFirm")
    {
      v[10]=VS(cur1->hook,"e");
      v[11]=VS(cur1->hook,"b"); 
      v[12]=VS(cur1->hook,"g"); 
-//     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
-     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2]-v[7];
+     v[13]=pow(v[10],v[0])*pow(v[11],v[1])*pow(v[12],v[2]);
+//     v[13]=v[10]*v[0]+v[11]*v[1]+v[12]*v[2]-v[7];
      v[14]=pow(v[13],v[5]);
      WRITES(cur1,"cfapp",v[14]);
      v[3]+=v[14];
