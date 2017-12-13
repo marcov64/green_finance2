@@ -150,6 +150,7 @@ Label Root
 		Param: wGDPg
 		Param: wGDPb
 		Param: wGDPc
+		Param: InitSavings
 
 	}
 
@@ -194,6 +195,7 @@ Var: TargetGDP 1 s + d n	10000
 Param: wGDPg 0 n + n n	0.1
 Param: wGDPb 0 n + n n	0.1
 Param: wGDPc 0 n + n n	0.8
+Param: InitSavings 0 n + n n	200
 
 Object: Demand C	1
 
@@ -497,6 +499,10 @@ Parameter_wGDPc
 (no description available)
 _INIT_
 
+END_DESCRIPTION
+
+Parameter_InitSavings
+(no description available)
 END_DESCRIPTION
 
 Object_Demand

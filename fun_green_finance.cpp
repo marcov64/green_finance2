@@ -135,8 +135,7 @@ v[1]=V_CHEAT("ComputePrice",c);
 v[0]=v[4]/v[1];
 v[2]=VS(c,"Cost");
 v[5]=VLS(c,"FixedCosts",1);
-//v[22]=V("FinancialCosts");
-v[3]=v[4]*(v[1]-v[2])-v[5];
+v[3]=v[0]*(v[1]-v[2])-v[5];
 RESULT(v[3] )
 
 EQUATION("FixedCosts")
@@ -148,8 +147,8 @@ v[1]=VL("FixedCosts",1);
 v[2]=V("aFC");
 v[3]=V("shareFC");
 v[5]=V("minFC");
-v[7]=V("Price");
-v[6]=v[1]*v[2]+(1-v[2])*v[0]*v[3]*v[7];
+
+v[6]=v[1]*v[2]+(1-v[2])*v[0]*v[3];
 v[4]=max(v[6],v[5]);
 RESULT(v[4] )
 
@@ -168,7 +167,9 @@ Cumulated cash from profits minus expenditures
 v[0]=V("Profit");
 v[1]=VL("Savings",1);
 v[2]=V("shareDividends");
-RESULT(v[1]*(1-v[2])+v[0] )
+if(v[1]>0)
+ v[1]*=(1-v[2]);
+RESULT(v[1]+v[0] )
 
 EQUATION("AvProfit")
 /*
@@ -234,6 +235,7 @@ WRITE("numExit",v[3]);
 v[0]=V("probEntry");
 if(RND<v[0])
  {v[4]=1;
+ v[62]=V("InitSavings");
  v[21]=V("ShareValuesNewEntrants");
   v[7]=V("IssueID");
   cur4=RNDDRAWS(cur1,"Firm","fapp");
@@ -244,6 +246,7 @@ if(RND<v[0])
 //  WRITES(cur,"g",V("ImitG"));    
 //  WRITES(cur,"Cost",V("ImitCost"));
   WRITES(cur,"Age",0);
+  WRITELS(cur,"Savings",v[62], t);
   v[22]=RND;
   WRITES(cur,"b",v[21]*VS(cur,"b"));
   WRITES(cur,"g",v[21]*VS(cur,"g"));        
@@ -281,7 +284,7 @@ v[0]=VS(c,"Savings");
 v[1]=VS(c,"Sales");
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
-v[5]=v[0]/(v[1]*v[2]);
+v[5]=v[0]/(v[1]);
 v[4]=min(max(0,v[5]),v[3]);
 v[6]=v[4]/v[3];
 
@@ -299,7 +302,7 @@ v[0]=VS(c,"Savings");
 v[1]=VS(c,"Sales");
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
-v[4]=min(max(0,v[5]=v[0]/(v[1]*v[2])),v[3]);
+v[4]=min(max(0,v[5]=v[0]/(v[1])),v[3]);
 v[6]=v[4]/v[3];
 
 v[7]=V("ProbLoanBrown");
@@ -316,7 +319,7 @@ v[0]=VS(c,"Savings");
 v[1]=VS(c,"Sales");
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
-v[4]=min(max(0,v[5]=v[0]/(v[1]*v[2])),v[3]);
+v[4]=min(max(0,v[5]=v[0]/(v[1])),v[3]);
 v[6]=v[4]/v[3];
 
 v[7]=V("ProbLoanGreen");
@@ -658,9 +661,11 @@ v[9]=V("max");
 v[18]=V("minCost");
 v[19]=V("maxCost");
 v[30]=v[32]=v[34]=0;
+v[63]=V("InitSavings");
 CYCLE(cur, "Firm")
   {
    v[7]=V("IssueID");
+   WRITELS(cur,"Savings",v[63], t);
    WRITES(cur,"IdFirm",v[7]);
    WRITES(cur,"Cost",v[31]=UNIFORM(v[18],v[19]));
    v[30]+=v[31];
