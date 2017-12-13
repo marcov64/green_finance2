@@ -245,9 +245,9 @@ if(RND<v[0])
 //  WRITES(cur,"Cost",V("ImitCost"));
   WRITES(cur,"Age",0);
   v[22]=RND;
-  WRITES(cur,"b",v[21]*(1-v[22])+v[22]*VS(cur,"b"));
-  WRITES(cur,"g",v[21]*(1-v[22])+v[22]*VS(cur,"g"));        
-  WRITES(cur,"Cost",v[21]*(1-v[22])+v[22]*VS(cur,"Cost"));
+  WRITES(cur,"b",v[21]*VS(cur,"b"));
+  WRITES(cur,"g",v[21]*VS(cur,"g"));        
+  WRITES(cur,"Cost",VS(cur,"Cost")/v[21]);
   WRITES(cur,"markup",V("Avmup"));  
   WRITELS(cur,"Price",V_CHEAT("ComputePrice",cur),t);
 
@@ -272,6 +272,59 @@ v[9]=INCRS(cur1,"numFirm",v[4]-v[3]);
 
 RESULT(v[9] )
 
+EQUATION("ComputeProbLoanCost")
+/*
+Probability of winning a loan to finance an innovation on cost reduction
+*/
+
+v[0]=VS(c,"Savings");
+v[1]=VS(c,"Sales");
+v[2]=VS(c,"Price");
+v[3]=V("MaxSavingsLoan");
+v[5]=v[0]/(v[1]*v[2]);
+v[4]=min(max(0,v[5]),v[3]);
+v[6]=v[4]/v[3];
+
+v[7]=V("ProbLoanCost");
+v[8]=v[7]*v[6];
+WRITES(c,"RatioSavingsRevenues",v[5]);
+RESULT(v[8] )
+
+EQUATION("ComputeProbLoanBrown")
+/*
+Probability of winning a loan to finance an innovation on cost reduction
+*/
+
+v[0]=VS(c,"Savings");
+v[1]=VS(c,"Sales");
+v[2]=VS(c,"Price");
+v[3]=V("MaxSavingsLoan");
+v[4]=min(max(0,v[5]=v[0]/(v[1]*v[2])),v[3]);
+v[6]=v[4]/v[3];
+
+v[7]=V("ProbLoanBrown");
+v[8]=v[7]*v[6];
+WRITES(c,"RatioSavingsRevenues",v[5]);
+RESULT(v[8] )
+
+EQUATION("ComputeProbLoanGreen")
+/*
+Probability of winning a loan to finance an innovation on cost reduction
+*/
+
+v[0]=VS(c,"Savings");
+v[1]=VS(c,"Sales");
+v[2]=VS(c,"Price");
+v[3]=V("MaxSavingsLoan");
+v[4]=min(max(0,v[5]=v[0]/(v[1]*v[2])),v[3]);
+v[6]=v[4]/v[3];
+
+v[7]=V("ProbLoanGreen");
+v[8]=v[7]*v[6];
+
+WRITES(c,"RatioSavingsRevenues",v[5]);
+RESULT(v[8] )
+
 EQUATION("BidLoan")
 /*
 The caller ask for a loan in order to:
@@ -282,11 +335,11 @@ The caller ask for a loan in order to:
 
 v[0]=VS(c,"InnType");
 if(v[0]==1)
- v[1]=V("ProbLoanCost");
+ v[1]=V_CHEAT("ComputeProbLoanCost",c);
 if(v[0]==2)
- v[1]=V("ProbLoanBrown");
+ v[1]=V_CHEAT("ComputeProbLoanBrown",c);
 if(v[0]==3)
- v[1]=V("ProbLoanGreen");
+ v[1]=V_CHEAT("ComputeProbLoanGreen",c);
 
 if(RND>v[1])
  END_EQUATION(0);
@@ -594,7 +647,7 @@ Initialization of the market.
 */
 
 
-v[4]=V("GDP");
+v[4]=VL("GDP",1);
 v[5]=V("numFirm");
 v[6]=v[4]/v[5];
 cur1=SEARCH("Supply");
