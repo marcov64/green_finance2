@@ -20,18 +20,24 @@ v[5]=VL("GDP",1);
 
 
 v[16]=(v[2])/v[5]; //percentage accelerator, in the range [-1;+1]
-v[17]=v[1]+(v[0]-v[1])*(v[16]+1)/2; //proportional shifting in the range [minus;plus]
+//v[17]=v[1]+(v[0]-v[1])*(v[16]+1)/2; //proportional shifting in the range [minus;plus]
 v[18]=V("wGDPg");
 
 v[26]=(v[3])/v[5]; //percentage accelerator, in the range [-1;+1]
-v[27]=v[1]+(v[0]-v[1])*(v[26]+1)/2; //proportional shifting in the range [minus;plus]
+//v[27]=v[1]+(v[0]-v[1])*(v[26]+1)/2; //proportional shifting in the range [minus;plus]
 v[28]=V("wGDPb");
 
-v[36]=(v[4])/v[5]; //percentage accelerator, in the range [-1;+1]
-v[37]=v[1]+(v[0]-v[1])*(v[36]+1)/2; //proportional shifting in the range [minus;plus]
+v[36]=(v[4]/v[5]); //percentage accelerator, in the range [-1;+1]
+//v[37]=v[1]+(v[0]-v[1])*(v[36]+1)/2; //proportional shifting in the range [minus;plus]
 v[38]=V("wGDPc");
 
-v[6]=v[18]*v[17]+v[28]*v[27]+v[38]/v[37]; //cumulated effect
+//v[6]=v[18]*v[17]+v[28]*v[27]+v[38]*v[37]; //cumulated effect
+
+v[6]=v[1]+(v[0]-v[1])*(v[18]*v[16]+v[28]*v[26]-v[38]*v[36]+1)/2;
+//v[6]=v[1]+(v[0]-v[1])*(v[18]*v[16]+v[28]*v[26]+v[38]*v[36]);
+WRITE("gr",v[18]*v[16]+v[28]*v[26]-v[38]*v[36]);
+
+
 v[9]=v[5]*v[6];
 RESULT(v[9] )
 
@@ -251,9 +257,10 @@ if(RND<v[0])
   WRITES(cur,"b",v[21]*VS(cur,"b"));
   WRITES(cur,"g",v[21]*VS(cur,"g"));        
   WRITES(cur,"Cost",VS(cur,"Cost")/v[21]);
-  WRITES(cur,"markup",V("Avmup"));  
+  //WRITES(cur,"markup",V("Avmup"));  
   WRITELS(cur,"Price",V_CHEAT("ComputePrice",cur),t);
-
+  
+  WRITELS(cur,"FixedCosts",0, t);//JEBO FIX
   WRITES(cur,"e",V_CHEAT("ComputeE",cur));  
 
   WRITES(cur,"InnType",0);   
@@ -706,6 +713,31 @@ CYCLES(cur1, cur, "ConsumerClass")
 PARAMETER   
 
 RESULT(1)
+
+EQUATION("InitContinuation")
+/*
+Initialize the model assuming the configuration is made by the concluding state at the end of a previous simulation run.
+*/
+
+
+cur1=SEARCH("Demand");
+
+v[5]=V("numFirm");
+CYCLES(cur1, cur, "ConsumerClass")
+ {
+//  ADDNOBJS(cur,"CFirm",v[5]-1);
+  v[3]=1;
+  cur2=SEARCH("Firm");
+  CYCLES(cur, cur5, "CFirm")
+   {
+    cur5->hook=cur2;
+    cur2=go_brother(cur2);
+   }
+ } 
+  
+PARAMETER   
+
+RESULT( 1)
 
 EQUATION("ce")
 /*
