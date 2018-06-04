@@ -1,0 +1,24 @@
+1 compare 1 and many initial firms
+2 compare high and low selection pressure
+3 compare different prob. to finance green projects
+
+Green Finance ver. 0.2
+Replaced microfounded consumers with a utility function.
+
+I plan to start implementing a simple model of competition over three product characteristics: price, brown quality and green quality.
+
+The technological landscape allows the improvement all three  characteristics via innovation, provided that the firms seek gradual and balance improvements. Otherwise, in case a firm rushes to get large improvements on one dimension only, the other two degrade proportionally to the increment of the pushed on. In case a firm seeks improvements on two characteristics the third degrades more sensibly.
+
+Firms define a research strategy in terms of the allocation of their R&D budget, defined by the shares to be spent on each of the three characteristics. The strategy may be exogenous, fixed for each firm, at their foundations. In this case entry is crucial, with a flow of new companies systematically entering the market with random R&D strategy. Exit occurs when a firm fails, so that average R&D strategy is endogenous, since only the best firms survive.
+
+Alternatively, the innovation strategy may be endogenous, with firms estimating the best allocation given the information concerning the effectiveness of possible innovations.
+
+A third alternative is that the innovation strategy is decided imitating that of reference competitors. These are firms offering similar products but more successful than the imitating one.  
+
+R&D is carried out only in case the firm estimate it worthwhile competitively. That is, you try innovation only it can bring in some competitive advantage.
+
+Consumers are placed on a social network. Each consumer compiles a list of the potential producers made by the firms directly known because of recent purchases and of the firms known by its peers in the social network. On top of this, firms can carry on advertisement campaigns that, with a small probability, can convince consumers to try the previously unknown product even if it is not part of the two classes (directly or indirectly known).
+
+The shape of the social network is a mixed of small-world and Barabasi's preferential attachment.
+
+Consumers may have difficulties in reading the real quality values of the products. They make no mistakes concerning price, make small mistakes concerning brown quality, and can make large mistakes concerning green quality. 
