@@ -288,7 +288,7 @@ Probability of winning a loan to finance an innovation on cost reduction
 */
 
 v[0]=VS(c,"Savings");
-v[1]=VS(c,"Sales");
+v[1]=max(VS(c,"Sales"),1); //fix to avoid div by 0
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
 v[5]=v[0]/(v[1]);
@@ -306,7 +306,7 @@ Probability of winning a loan to finance an innovation on cost reduction
 */
 
 v[0]=VS(c,"Savings");
-v[1]=VS(c,"Sales");
+v[1]=max(VS(c,"Sales"),1); //fix to avoid div by 0
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
 v[4]=min(max(0,v[5]=v[0]/(v[1])),v[3]);
@@ -323,7 +323,7 @@ Probability of winning a loan to finance an innovation on cost reduction
 */
 
 v[0]=VS(c,"Savings");
-v[1]=VS(c,"Sales");
+v[1]=max(VS(c,"Sales"),1); //fix to avoid div by 0
 v[2]=VS(c,"Price");
 v[3]=V("MaxSavingsLoan");
 v[4]=min(max(0,v[5]=v[0]/(v[1])),v[3]);
